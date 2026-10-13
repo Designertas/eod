@@ -734,13 +734,14 @@ const CREW = {
     { name: "Charlie", role: "Supervisor" }
   ],
   "Crew": [
-    { name: "Josh", role: "Carpenter" },
-    { name: "Zach", role: "Carpenter" }
+    { name: "Zach", role: "Carpenter" },
+    { name: "Jimmy", role: "Carpenter" },
+    { name: "Jade", role: "Carpenter" }
   ]
 };
 
 // Who gets scored on the Weekly KPI Scorecard (Charlie scores these people).
-const KPI_SCORED = ["Josh", "Zach"];
+const KPI_SCORED = ["Zach", "Jimmy", "Jade"];
 
 // Name shown to the crew as the person who reviews their KPI.
 const BOSS_NAME = "Charlie";
@@ -1917,7 +1918,7 @@ function buildQcTrades() {
         <textarea id="qc-desc-${t.id}" placeholder="Short description"></textarea>
 
         <label>Responsible trade / person (if known)</label>
-        <input type="text" id="qc-resp-${t.id}" placeholder="e.g. Josh, or the tiler">
+        <input type="text" id="qc-resp-${t.id}" placeholder="e.g. Zach, or the tiler">
 
         <label>Rectified on the spot? <span class="required-star">*</span></label>
         <div class="yesno" data-field="qc-rect-${t.id}">

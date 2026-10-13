@@ -484,7 +484,7 @@
 
     <div class="card">
       <h2>Daily checklist</h2>
-      <div class="card-sub">Tradify / office questions — answer all of these</div>
+      <div class="card-sub">Office questions — answer all of these</div>
       <div id="dailyChecklist"></div>
     </div>
 
@@ -750,7 +750,7 @@ const BOSS_NAME = "Charlie";
 // minutes — stops someone picking an old photo from their gallery.
 const PROOF_MAX_AGE_MIN = 10;
 
-// Daily checklist questions (Tradify / office questions).
+// Daily checklist questions (office questions).
 // Add, remove, or reorder items here — the form and email both
 // pick this up automatically. "options" is ['Yes','No'] or
 // ['Yes','No','N/A']. "noteWhen" lists which answer(s) should pop
@@ -761,11 +761,10 @@ const PROOF_MAX_AGE_MIN = 10;
 // reflect what's actually good news vs. what needs attention, rather than
 // Yes always being green and No always being red.
 const DAILY_CHECKLIST = [
-  { id: 'tasksCompleted', label: 'Were all scheduled Tradify tasks completed today?', options: ['Yes','No'], noteWhen: ['No'], notePrompt: "What's still outstanding?", noteRequired: true, goodAnswers: ['Yes'] },
+  { id: 'tasksCompleted', label: 'Were all scheduled tasks completed today?', options: ['Yes','No'], noteWhen: ['No'], notePrompt: "What's still outstanding?", noteRequired: true, goodAnswers: ['Yes'] },
   { id: 'scheduleImpact', label: 'Is there anything that will affect the current schedule or timeline?', options: ['Yes','No'], noteWhen: ['Yes'], notePrompt: 'What, and how?', noteRequired: true, goodAnswers: ['No'] },
   { id: 'photosTaken', label: 'Were all required photos taken today?', options: ['Yes','No','N/A'], noteWhen: [], noteRequired: false, goodAnswers: ['Yes'] },
-  { id: 'photosUploaded', label: 'Were all required progress photos uploaded to Tradify?', options: ['Yes','No','N/A'], noteWhen: [], noteRequired: false, goodAnswers: ['Yes'] },
-  { id: 'timesheetsComplete', label: 'Are your Tradify timesheets complete and accurate?', options: ['Yes','No'], noteWhen: ['No'], notePrompt: 'What needs fixing?', noteRequired: false, goodAnswers: ['Yes'] },
+  { id: 'timesheetsComplete', label: 'Are your timesheets complete and accurate?', options: ['Yes','No'], noteWhen: ['No'], notePrompt: 'What needs fixing?', noteRequired: false, goodAnswers: ['Yes'] },
   { id: 'clientHappy', label: "Is the client happy with today's progress?", options: ['Yes','No','N/A'], noteWhen: ['No'], notePrompt: "What's the issue?", noteRequired: true, goodAnswers: ['Yes'] },
   { id: 'officeAction', label: 'Is there anything the office needs to action before tomorrow?', options: ['Yes','No'], noteWhen: ['Yes'], notePrompt: 'What do they need to do?', noteRequired: true, goodAnswers: ['No'] },
   { id: 'materialsToOrder', label: 'Are there any materials that need to be ordered?', options: ['Yes','No'], noteWhen: ['Yes'], notePrompt: "What's needed?", noteRequired: true, goodAnswers: ['No'] },
@@ -879,14 +878,12 @@ const KPI_DESCRIPTIONS = {
     excellent: [
       'Makes informed decisions within their authority.',
       'Solves problems before contacting the office.',
-      'Tradify updated with progress photos and notes.',
       'Variations and site issues recorded promptly.',
       'Professional communication with clients, suppliers and subcontractors.',
       'Escalates issues early with recommended solutions.'
     ],
     poor: [
       'Constant reliance on the office.',
-      'Tradify not maintained.',
       'Poor communication with clients or trades.',
       'Variations not documented.',
       'Problems communicated too late.',
@@ -898,7 +895,6 @@ const KPI_DESCRIPTIONS = {
     excellent: [
       'All paperwork uploaded to Hubdoc every Friday.',
       'Timesheets submitted on time.',
-      'Tradify maintained throughout the project.',
       'Materials organised ahead of schedule.',
       'Site presented professionally.',
       'Represents Designer Built with pride.'
@@ -906,7 +902,6 @@ const KPI_DESCRIPTIONS = {
     poor: [
       'Missing or late paperwork.',
       'Late timesheets.',
-      'Tradify incomplete or not updated.',
       'Materials not organised.',
       'Untidy worksite.',
       'Poor representation of the company.'
@@ -1243,7 +1238,7 @@ function toggleFlag(name) {
 }
 
 /* ============================================================
-   DAILY CHECKLIST (Tradify / office questions)
+   DAILY CHECKLIST (office questions)
    ============================================================ */
 function setDaily(id, value) {
   dailyState[id] = value;

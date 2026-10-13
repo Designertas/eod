@@ -1,0 +1,2331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Designer Built — EOD Sign-off</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand: #181818;
+    --brand-light: #2a2a2a;
+    --accent: #f2c56b;
+    --accent-dark: #d9a83f;
+    --danger: #c0392b;
+    --ok: #2e7d32;
+    --bg: #f2f1ee;
+    --card: #ffffff;
+    --border: #ded9d0;
+    --text: #1a1a1a;
+    --muted: #6b6b6b;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding-bottom: 80px;
+  }
+  h1, .card h2 { font-family: "Playfair Display", Georgia, serif; }
+  header {
+    background: var(--brand);
+    color: #fff;
+    padding: 18px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  header h1 { margin: 0; font-size: 20px; letter-spacing: 0.02em; }
+  header .sub { font-size: 13px; opacity: 0.85; margin-top: 2px; }
+
+  nav.tabs {
+    display: flex;
+    background: var(--brand-light);
+    position: sticky;
+    top: 62px;
+    z-index: 19;
+  }
+  nav.tabs button {
+    flex: 1;
+    padding: 14px 4px;
+    background: none;
+    border: none;
+    color: #fff;
+    opacity: 0.7;
+    font-size: 15px;
+    font-weight: 600;
+    border-bottom: 3px solid transparent;
+  }
+  nav.tabs button.active {
+    opacity: 1;
+    border-bottom: 3px solid var(--accent);
+  }
+  nav.tabs button#tabBtnQC { font-size: 12px; line-height: 1.2; padding: 10px 2px; letter-spacing: 0; }
+
+  main { padding: 16px; max-width: 640px; margin: 0 auto; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .card h2 {
+    font-size: 16px;
+    margin: 0 0 12px 0;
+    color: var(--brand);
+  }
+  .card .card-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin: -8px 0 12px 0;
+  }
+  label { display: block; font-size: 14px; font-weight: 600; margin: 12px 0 6px; }
+  label:first-child { margin-top: 0; }
+
+  .name-grid, .job-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .pill {
+    padding: 14px 18px;
+    border-radius: 999px;
+    border: 2px solid var(--border);
+    background: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    min-height: 48px;
+  }
+  .pill.selected {
+    background: var(--brand);
+    border-color: var(--brand);
+    color: #fff;
+  }
+  .role-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 14px 0 6px; }
+  .role-label:first-child { margin-top: 0; }
+
+  select, textarea, input[type=text], input[type=number] {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--text);
+    font-family: inherit;
+  }
+  textarea { min-height: 90px; resize: vertical; }
+
+  .task-list label.check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+  .task-list label.check:last-child { border-bottom: none; }
+  input[type=checkbox], input[type=radio] { width: 22px; height: 22px; flex-shrink: 0; }
+
+  .highlight-box {
+    background: #fff8dc;
+    border: 2px solid var(--accent);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .highlight-box label { color: #6b5200; }
+  .required-star { color: var(--danger); }
+
+  .flag-item { border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 10px; }
+  .flag-item.active { border-color: var(--danger); background: #fdf1f0; }
+  .flag-item .flag-header { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+  .flag-item .flag-detail { margin-top: 10px; }
+
+  .yesno { display: flex; gap: 8px; }
+  .yesno button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    background: #fff;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .yesno button.sel-yes.selected { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .yesno button.sel-no.selected { background: var(--danger); border-color: var(--danger); color: #fff; }
+  .yesno button.sel-na.selected { background: var(--muted); border-color: var(--muted); color: #fff; }
+
+  .gear-item { margin-bottom: 16px; }
+  .gear-item:last-child { margin-bottom: 0; }
+  .gear-item .note-box { margin-top: 8px; display: none; }
+  .gear-item .note-box.show { display: block; }
+  .gear-item.important label { color: var(--danger); }
+
+  .smiley-box {
+    display: none;
+    text-align: center;
+    font-size: 64px;
+    line-height: 1;
+    margin-top: 10px;
+    animation: pop 0.35s ease;
+  }
+  .smiley-box.show { display: block; }
+  @keyframes pop {
+    0% { transform: scale(0.4); opacity: 0; }
+    60% { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+
+  .week-row { display: flex; align-items: center; gap: 10px; }
+  .week-row input { flex: 1; }
+  .week-row span { font-weight: 600; color: var(--muted); }
+
+  .kpi-item { margin-bottom: 16px; }
+  .kpi-item:last-child { margin-bottom: 0; }
+  .kpi-label { cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .kpi-label .info-icon { font-size: 12px; font-weight: 600; color: var(--brand); white-space: nowrap; }
+  .kpi-desc { display: none; background: #f2f4f7; border-radius: 8px; padding: 10px 12px; margin-top: 8px; font-size: 13px; }
+  .kpi-desc.show { display: block; }
+  .kpi-desc .kpi-desc-summary { color: var(--muted); font-style: italic; margin-bottom: 10px; }
+  .kpi-desc-col { margin-bottom: 10px; }
+  .kpi-desc-col:last-child { margin-bottom: 0; }
+  .kpi-desc-col.excellent b { color: var(--ok); }
+  .kpi-desc-col.poor b { color: var(--danger); }
+  .kpi-desc ul { margin: 4px 0 0 18px; padding: 0; }
+  .kpi-desc li { margin-bottom: 3px; }
+  .rating-buttons { display: flex; gap: 6px; margin-top: 6px; }
+  .rating-buttons button {
+    flex: 1;
+    padding: 10px 0;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    background: #fff;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .rating-buttons button.rate-1.selected { background: #c0392b; border-color: #c0392b; color: #fff; }
+  .rating-buttons button.rate-2.selected { background: #e0703c; border-color: #e0703c; color: #fff; }
+  .rating-buttons button.rate-3.selected { background: #e8b923; border-color: #e8b923; color: #1a1a1a; }
+  .rating-buttons button.rate-4.selected { background: #8fb339; border-color: #8fb339; color: #fff; }
+  .rating-buttons button.rate-5.selected { background: #2e7d32; border-color: #2e7d32; color: #fff; }
+  .kpi-comment { margin-top: 8px; min-height: 60px; }
+  .kpi-total-box {
+    background: #fff8dc;
+    border: 2px solid var(--accent);
+    border-radius: 10px;
+    padding: 12px;
+    margin: 16px 0;
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding: 16px;
+    background: var(--brand);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .btn-primary:disabled { opacity: 0.5; }
+  .btn-secondary {
+    width: 100%;
+    padding: 14px;
+    background: #fff;
+    color: var(--brand);
+    border: 2px solid var(--brand);
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 8px;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    left: 16px;
+    right: 16px;
+    background: var(--ok);
+    color: #fff;
+    padding: 14px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 700;
+    z-index: 50;
+    display: none;
+  }
+  .toast.show { display: block; }
+  .toast.error { background: var(--danger); }
+
+  .pin-pad { max-width: 280px; margin: 40px auto; text-align: center; }
+  .pin-dots { font-size: 32px; letter-spacing: 10px; margin: 20px 0; min-height: 40px; }
+  .pin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .pin-grid button {
+    padding: 20px;
+    font-size: 22px;
+    border-radius: 10px;
+    border: 2px solid var(--border);
+    background: #fff;
+    font-weight: 700;
+  }
+
+  .summary-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+  .summary-row:last-child { border-bottom: none; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+  .badge.ok { background: #e6f4ea; color: var(--ok); }
+  .badge.warn { background: #fdecea; color: var(--danger); }
+
+  .flag-log-item { border-left: 4px solid var(--danger); padding: 8px 12px; margin-bottom: 10px; background: #fdf1f0; border-radius: 0 8px 8px 0; }
+  .job-item { border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 10px; }
+  .job-item.done { opacity: 0.6; text-decoration: line-through; }
+
+  .hidden { display: none !important; }
+  nav.tabs button { font-size: 12px; line-height: 1.2; padding: 12px 2px; letter-spacing: 0; }
+  .proof-card { border: 2px solid var(--accent); }
+  .proof-btn { width: 100%; padding: 16px; font-size: 16px; font-weight: 700; border-radius: 10px;
+    border: 2px dashed var(--accent-dark); background: #fffaf0; color: #333; cursor: pointer; }
+  .proof-preview { display: block; width: 100%; margin-top: 10px; border-radius: 8px; border: 1px solid #ddd; }
+  .proof-info { font-size: 13px; margin-top: 6px; }
+  .proof-info.warn { color: var(--danger); font-weight: 600; }
+  .proof-info.good { color: var(--ok); font-weight: 600; }
+  .kpi-self-score { font-size: 13px; background: #f3f6fb; border-left: 3px solid #5b7db1; padding: 6px 8px; margin: 6px 0; border-radius: 4px; }
+  .kpi-self-panel { background: #f3f6fb; border: 1px solid #c9d6ea; border-radius: 8px; padding: 10px 12px; margin: 12px 0; font-size: 14px; }
+  .kpi-self-panel p { margin: 4px 0; }
+  .helper { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* Morning JSA / SWMS + signature pad */
+  .ppe-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ppe-chip { background: var(--bg); border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; font-size: 13px; font-weight: 600; }
+  .jsa-step { margin-bottom: 18px; padding-bottom: 16px; border-bottom: 1px solid #eee; }
+  .jsa-step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .jsa-step-title { font-weight: 700; margin-bottom: 8px; font-size: 15px; }
+  .jsa-col { margin-bottom: 8px; font-size: 13px; }
+  .jsa-col:last-child { margin-bottom: 0; }
+  .jsa-col b.hz { color: var(--danger); }
+  .jsa-col b.ctl { color: var(--ok); }
+  .jsa-col ul { margin: 4px 0 0 18px; padding: 0; }
+  .jsa-col li { margin-bottom: 3px; }
+  .jsa-crew-pill.signed { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .jsa-crew-pill.signed::after { content: ' ✓'; }
+  .jsa-crew-pill.active-signing { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+  .sig-canvas-wrap { border: 2px solid var(--border); border-radius: 10px; overflow: hidden; background: #fff; }
+  #jsaCanvas { display: block; width: 100%; height: 160px; touch-action: none; }
+  .sig-actions { display: flex; gap: 8px; margin-top: 10px; }
+  .sig-actions button { flex: 1; }
+
+  /* QC completion checklist */
+  .qc-trade-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .qc-trade-head h2 { margin: 0; }
+  .qc-caret {
+    background: none;
+    border: none;
+    font-size: 20px;
+    line-height: 1;
+    padding: 6px 8px;
+    color: var(--muted);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+  .qc-caret.open { transform: rotate(180deg); }
+  .qc-yesno { margin-top: 12px; gap: 8px; }
+  .qc-yesno button { padding: 18px 4px; font-size: 16px; min-height: 56px; letter-spacing: 0.02em; }
+  .qc-defect-box {
+    display: none;
+    margin-top: 14px;
+    background: #fdf1f0;
+    border: 2px solid var(--danger);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .qc-defect-box.show { display: block; }
+  .qc-defect-box label { color: #7a2015; }
+  .qc-photo-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+  .qc-photo-thumb { width: 64px; height: 64px; border-radius: 8px; object-fit: cover; border: 2px solid var(--danger); }
+  .qc-photo-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    border: 2px dashed var(--muted);
+    background: #fff;
+    font-size: 26px;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .qc-detail { display: none; margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--border); }
+  .qc-detail.show { display: block; }
+  .qc-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    padding: 10px 4px;
+    margin: 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .qc-item:last-child { border-bottom: none; }
+  .qc-item-check {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    background: #fff;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: transparent;
+    transition: all 0.15s ease;
+  }
+  .qc-item.checked { background: #e6f4ea; }
+  .qc-item.checked .qc-item-check { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .qc-item.checked .qc-item-text { color: var(--ok); font-weight: 700; }
+  .qc-notes { min-height: 150px; }
+  #qcSummaryList .summary-row { align-items: center; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Designer Built</h1>
+  <div class="sub">Crew end-of-day sign-off</div>
+</header>
+
+<nav class="tabs">
+  <button id="tabBtnMorning" onclick="showTab('morning')">JOB START</button>
+  <button id="tabBtnCrew" class="active" onclick="showTab('crew')">JOB END</button>
+  <button id="tabBtnSup" onclick="showTab('sup')">SUPERVISOR</button>
+  <button id="tabBtnMyKpi" onclick="showTab('mykpi')">MY KPI</button>
+  <button id="tabBtnQC" onclick="showTab('qc')">QC / COMPLETION</button>
+</nav>
+
+<main>
+
+  <!-- ============ MORNING JSA TAB ============ -->
+  <div id="tab-morning" class="hidden">
+
+    <div class="card">
+      <h2>Morning JSA / SWMS sign-on</h2>
+      <div class="card-sub">General construction — read before starting work</div>
+      <label>Job</label>
+      <select id="jsaJobSelect"><option value="">Loading jobs…</option></select>
+    </div>
+
+    <div class="card">
+      <h2>PPE required</h2>
+      <div class="ppe-list" id="jsaPpeList"></div>
+    </div>
+
+    <div class="card">
+      <h2>Steps, hazards &amp; controls</h2>
+      <div id="jsaStepsList"></div>
+    </div>
+
+    <div class="card">
+      <h2>Crew signing on today</h2>
+      <div class="card-sub">Tap your name, then sign below</div>
+      <div id="jsaCrewGrid"></div>
+    </div>
+
+    <div class="card hidden" id="jsaSignPad">
+      <h2>Signature — <span id="jsaSignName"></span></h2>
+      <div class="sig-canvas-wrap">
+        <canvas id="jsaCanvas"></canvas>
+      </div>
+      <div class="sig-actions">
+        <button class="btn-secondary" type="button" onclick="clearJsaCanvas()">Clear</button>
+        <button class="btn-primary" type="button" onclick="saveJsaSignature()">Save signature</button>
+      </div>
+    </div>
+
+    <div class="card proof-card">
+      <h2>Site photo — starting work <span class="required-star">*</span></h2>
+      <div class="card-sub">Take a photo of the site right now. It gets stamped with the time and your GPS location.</div>
+      <button class="proof-btn" type="button" onclick="takeProofPhoto('jsa')">📷 Take photo now</button>
+      <input type="file" accept="image/*" capture="environment" id="proofInput-jsa" class="hidden" onchange="handleProofPhoto('jsa', this)">
+      <img id="proofImg-jsa" class="proof-preview hidden" alt="">
+      <div class="proof-info" id="proofInfo-jsa"></div>
+    </div>
+
+    <button class="btn-primary" id="jsaSubmitBtn" onclick="submitJsaSignon()">Submit morning JSA sign-on</button>
+  </div>
+
+  <!-- ============ CREW TAB ============ -->
+  <div id="tab-crew">
+
+    <div class="card">
+      <h2>On site</h2>
+      <label>Who's signing off? (select everyone who worked this job today)</label>
+      <div id="nameGrid"></div>
+
+      <label>Job</label>
+      <select id="jobSelect"><option value="">Loading jobs…</option></select>
+    </div>
+
+    <div class="card highlight-box">
+      <label>Job update <span class="required-star">*</span> — where's the job at, what's left, any blockers?</label>
+      <textarea id="jobUpdate" placeholder="e.g. Demo complete in bathroom, plaster booked for Thursday, waiting on tile delivery..."></textarea>
+    </div>
+
+    <div class="card">
+      <h2>Daily checklist</h2>
+      <div class="card-sub">Tradify / office questions — answer all of these</div>
+      <div id="dailyChecklist"></div>
+    </div>
+
+    <div class="card">
+      <h2>Flag to the boss</h2>
+
+      <div class="flag-item" id="flagDamage">
+        <div class="flag-header"><input type="checkbox" id="chkDamage" onchange="toggleFlag('Damage')"> Damage / make-good needed</div>
+        <div class="flag-detail hidden" id="detailDamage">
+          <textarea id="detailDamageText" placeholder="What's damaged, where, how bad?"></textarea>
+        </div>
+      </div>
+
+      <div class="flag-item" id="flagVariation">
+        <div class="flag-header"><input type="checkbox" id="chkVariation" onchange="toggleFlag('Variation')"> Variation (extra work/hours)</div>
+        <div class="flag-detail hidden" id="detailVariation">
+          <textarea id="detailVariationText" placeholder="What extra work and why?"></textarea>
+          <label>Extra hours logged</label>
+          <input type="number" id="variationHours" min="0" step="0.5" placeholder="e.g. 2">
+        </div>
+      </div>
+
+      <div class="flag-item" id="flagHoldUp">
+        <div class="flag-header"><input type="checkbox" id="chkHoldUp" onchange="toggleFlag('HoldUp')"> Hold-up (weather, other trades, inspections, deliveries)</div>
+        <div class="flag-detail hidden" id="detailHoldUp">
+          <textarea id="detailHoldUpText" placeholder="What held things up?"></textarea>
+        </div>
+      </div>
+
+      <div class="flag-item" id="flagMaterials">
+        <div class="flag-header"><input type="checkbox" id="chkMaterials" onchange="toggleFlag('Materials')"> Materials running low</div>
+        <div class="flag-detail hidden" id="detailMaterials">
+          <textarea id="detailMaterialsText" placeholder="What's needed?"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="apprenticeCard">
+      <h2>Apprentice reflection</h2>
+      <label>What's one thing you learned or found tricky today?</label>
+      <textarea id="apprenticeReflection"></textarea>
+    </div>
+
+    <div class="card">
+      <h2>Anything else</h2>
+      <textarea id="otherNotes" placeholder="Optional notes"></textarea>
+    </div>
+
+    <div class="card proof-card">
+      <h2>Site photo — finishing up <span class="required-star">*</span></h2>
+      <div class="card-sub">Take a photo of the work done today. It gets stamped with the time and your GPS location.</div>
+      <button class="proof-btn" type="button" onclick="takeProofPhoto('eod')">📷 Take photo now</button>
+      <input type="file" accept="image/*" capture="environment" id="proofInput-eod" class="hidden" onchange="handleProofPhoto('eod', this)">
+      <img id="proofImg-eod" class="proof-preview hidden" alt="">
+      <div class="proof-info" id="proofInfo-eod"></div>
+    </div>
+
+    <button class="btn-primary" id="submitBtn" onclick="submitEod()">Submit end-of-day</button>
+  </div>
+
+  <!-- ============ SUPERVISOR TAB ============ -->
+  <div id="tab-sup" class="hidden">
+    <div id="pinScreen" class="card pin-pad">
+      <h2>Supervisor PIN</h2>
+      <div class="pin-dots" id="pinDots"></div>
+      <div class="pin-grid">
+        <button onclick="pinPress('1')">1</button><button onclick="pinPress('2')">2</button><button onclick="pinPress('3')">3</button>
+        <button onclick="pinPress('4')">4</button><button onclick="pinPress('5')">5</button><button onclick="pinPress('6')">6</button>
+        <button onclick="pinPress('7')">7</button><button onclick="pinPress('8')">8</button><button onclick="pinPress('9')">9</button>
+        <button onclick="pinClear()">Clear</button><button onclick="pinPress('0')">0</button><button onclick="pinBackspace()">⌫</button>
+      </div>
+    </div>
+
+    <div id="supDashboard" class="hidden">
+      <div class="card">
+        <h2>Today — <span id="dashDate"></span></h2>
+        <div class="summary-row"><span>Submitted</span><span id="dashSubmittedCount">—</span></div>
+        <div class="summary-row"><span>Outstanding</span><span id="dashOutstanding">—</span></div>
+        <div class="summary-row"><span>Total variation hours</span><span id="dashVarHours">—</span></div>
+        <button class="btn-secondary" onclick="loadSupervisorSummary()">Refresh</button>
+      </div>
+      <div class="card">
+        <h2>Flags raised today</h2>
+        <div id="dashFlags"><p class="helper">Loading…</p></div>
+      </div>
+
+      <div class="card" id="weeklyKpiSection">
+        <h2>Assess crew KPI</h2>
+        <div class="card-sub">The crew rate themselves in MY KPI — you review it and set the final score (your score decides the bonus)</div><div class="helper" style="color: var(--danger); font-weight: 600;">Must be completed before 7:00 PM or it won't be applicable for that week.</div>
+
+        <label>Crew member</label>
+        <select id="kpiCrewLeader" onchange="loadSelfKpiForReview()"><option value="">Select…</option></select>
+
+        <label>Week of</label>
+        <div class="week-row">
+          <input type="date" id="kpiWeekStart" onchange="loadSelfKpiForReview()">
+          <span>to</span>
+          <input type="date" id="kpiWeekEnd">
+        </div>
+
+        <div id="kpiSelfPanel" class="kpi-self-panel hidden"></div>
+
+        <div id="weeklyKpiList"></div>
+
+        <div class="kpi-total-box" id="kpiTotalBox">Total score: 0 / 45</div>
+
+        <label>Feedback — what they did well</label>
+        <textarea id="kpiBiggestWin"></textarea>
+        <label>Feedback — areas for improvement</label>
+        <textarea id="kpiAreasImprovement"></textarea>
+        <label>Goals for next week</label>
+        <textarea id="kpiGoalsNextWeek"></textarea>
+
+        <button class="btn-primary" onclick="submitWeeklyKpi()">Submit final KPI</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MY KPI TAB (crew self-assessment) ============ -->
+  <div id="tab-mykpi" class="hidden">
+    <div class="card" id="selfKpiSection">
+      <h2>My weekly KPI</h2>
+      <div class="card-sub">Rate yourself honestly for the week — Charlie reviews it and sets the final score.</div><div class="helper" style="color: var(--danger); font-weight: 600;">Must be completed before 7:00 PM or it won't be applicable for that week.</div>
+
+      <label>Your name</label>
+      <select id="selfKpiName"><option value="">Select…</option></select>
+
+      <label>Week of</label>
+      <div class="week-row">
+        <input type="date" id="selfKpiWeekStart">
+        <span>to</span>
+        <input type="date" id="selfKpiWeekEnd">
+      </div>
+
+      <div id="selfKpiList"></div>
+
+      <div class="kpi-total-box" id="selfKpiTotalBox">Total score: 0 / 45</div>
+
+      <label>Are your hours done and correct?</label>
+      <div class="yesno" data-field="selfHoursCorrect">
+        <button class="sel-yes" onclick="setWeeklyCheck('selfHoursCorrect','Yes')">Yes</button>
+        <button class="sel-no" onclick="setWeeklyCheck('selfHoursCorrect','No')">No</button>
+      </div>
+
+      <label>Are all your receipts uploaded correctly with the job number (JN)?</label>
+      <div class="yesno" data-field="selfReceiptsUploaded">
+        <button class="sel-yes" onclick="setWeeklyCheck('selfReceiptsUploaded','Yes')">Yes</button>
+        <button class="sel-no" onclick="setWeeklyCheck('selfReceiptsUploaded','No')">No</button>
+      </div>
+
+      <label>Biggest win this week</label>
+      <textarea id="selfBiggestWin"></textarea>
+      <label>Biggest challenge this week</label>
+      <textarea id="selfBiggestChallenge"></textarea>
+      <label>Where can you improve?</label>
+      <textarea id="selfAreasImprovement"></textarea>
+      <label>Your goals for next week</label>
+      <textarea id="selfGoalsNextWeek"></textarea>
+      <label>How can Charlie / the office better support you?</label>
+      <textarea id="selfOfficeSupport"></textarea>
+
+      <button class="btn-primary" id="selfKpiSubmitBtn" onclick="submitSelfKpi()">Send my KPI to Charlie</button>
+    </div>
+  </div>
+
+  <!-- ============ QC TAB ============ -->
+  <div id="tab-qc" class="hidden">
+
+    <div class="card">
+      <h2>QC/COMPLETION</h2>
+      <label>JOB</label>
+      <select id="qcJobSelect" onchange="onQcJobChange()"><option value="">Loading jobs…</option></select>
+      <div class="helper" id="qcJobAddress"></div>
+
+      <label>COMPLETED BY</label>
+      <div id="qcSupervisorGrid" class="name-grid"></div>
+
+      <div class="helper" style="margin-top: 12px;">Date: <span id="qcDate"></span></div>
+    </div>
+
+    <div class="card qc-summary-box hidden" id="qcSummaryBox">
+      <h2>Outstanding defects</h2>
+      <div id="qcSummaryList"></div>
+    </div>
+
+    <div id="qcTradesList"></div>
+
+    <div class="card">
+      <h2>COMPLETION</h2>
+
+      <label>IS THE CLIENT HAPPY?</label>
+      <div class="yesno qc-yesno" data-completion="clientHappy">
+        <button class="sel-yes" data-opt="Yes" onclick="setQcCompletion('clientHappy','Yes')">YES</button>
+        <button class="sel-no" data-opt="No" onclick="setQcCompletion('clientHappy','No')">NO</button>
+        <button class="sel-yes" data-opt="N/A" onclick="setQcCompletion('clientHappy','N/A')">N/A</button>
+      </div>
+      <div class="qc-defect-box" id="qc-completion-reason-box-clientHappy">
+        <label>WHY NOT? <span class="required-star">*</span></label>
+        <textarea id="qc-completion-reason-clientHappy" placeholder="What's the issue?"></textarea>
+      </div>
+
+      <label>HAS EVERYTHING BEEN REMOVED FROM THE JOB SITE?</label>
+      <div class="yesno qc-yesno" data-completion="siteCleared">
+        <button class="sel-yes" data-opt="Yes" onclick="setQcCompletion('siteCleared','Yes')">YES</button>
+        <button class="sel-no" data-opt="No" onclick="setQcCompletion('siteCleared','No')">NO</button>
+        <button class="sel-yes" data-opt="N/A" onclick="setQcCompletion('siteCleared','N/A')">N/A</button>
+      </div>
+      <div class="qc-defect-box" id="qc-completion-reason-box-siteCleared">
+        <label>WHY NOT? <span class="required-star">*</span></label>
+        <textarea id="qc-completion-reason-siteCleared" placeholder="What's still on site?"></textarea>
+      </div>
+
+      <label>IS THE JOB SITE CLEAN?</label>
+      <div class="yesno qc-yesno" data-completion="siteClean">
+        <button class="sel-yes" data-opt="Yes" onclick="setQcCompletion('siteClean','Yes')">YES</button>
+        <button class="sel-no" data-opt="No" onclick="setQcCompletion('siteClean','No')">NO</button>
+        <button class="sel-yes" data-opt="N/A" onclick="setQcCompletion('siteClean','N/A')">N/A</button>
+      </div>
+      <div class="qc-defect-box" id="qc-completion-reason-box-siteClean">
+        <label>WHY NOT? <span class="required-star">*</span></label>
+        <textarea id="qc-completion-reason-siteClean" placeholder="What needs cleaning?"></textarea>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>NOTES</h2>
+      <textarea id="qcNotes" class="qc-notes" placeholder="Final comments, outstanding defects, client requests, or anything else about completion..."></textarea>
+    </div>
+
+    <button class="btn-primary" id="qcSubmitBtn" onclick="submitQc()">QC COMPLETE</button>
+  </div>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   EDITABLE SETTINGS — change these any time, no other code needed
+   ============================================================ */
+const API_URL = "https://script.google.com/macros/s/AKfycbx7kBjn-E6q1LkH1PkyM42RHyC05mh1noT8AUIt_2BThsto-j57Rra1Xdl-1gv2b1R6Yw/exec";
+
+const SUPERVISOR_PIN = "1010";
+
+const CREW = {
+  "Supervisors": [
+    { name: "Charlie", role: "Supervisor" }
+  ],
+  "Crew": [
+    { name: "Josh", role: "Carpenter" },
+    { name: "Zach", role: "Carpenter" }
+  ]
+};
+
+// Who gets scored on the Weekly KPI Scorecard (Charlie scores these people).
+const KPI_SCORED = ["Josh", "Zach"];
+
+// Name shown to the crew as the person who reviews their KPI.
+const BOSS_NAME = "Charlie";
+
+// Site photos (JSA + end of day): reject a photo older than this many
+// minutes — stops someone picking an old photo from their gallery.
+const PROOF_MAX_AGE_MIN = 10;
+
+// Daily checklist questions (Tradify / office questions).
+// Add, remove, or reorder items here — the form and email both
+// pick this up automatically. "options" is ['Yes','No'] or
+// ['Yes','No','N/A']. "noteWhen" lists which answer(s) should pop
+// open a required (or optional) note box.
+// "goodAnswers" lists which answer(s) count as a good/on-track outcome for
+// that question — those render green. Anything else renders red. N/A always
+// renders green (nothing to worry about). This lets each question's colours
+// reflect what's actually good news vs. what needs attention, rather than
+// Yes always being green and No always being red.
+const DAILY_CHECKLIST = [
+  { id: 'tasksCompleted', label: 'Were all scheduled Tradify tasks completed today?', options: ['Yes','No'], noteWhen: ['No'], notePrompt: "What's still outstanding?", noteRequired: true, goodAnswers: ['Yes'] },
+  { id: 'scheduleImpact', label: 'Is there anything that will affect the current schedule or timeline?', options: ['Yes','No'], noteWhen: ['Yes'], notePrompt: 'What, and how?', noteRequired: true, goodAnswers: ['No'] },
+  { id: 'photosTaken', label: 'Were all required photos taken today?', options: ['Yes','No','N/A'], noteWhen: [], noteRequired: false, goodAnswers: ['Yes'] },
+  { id: 'photosUploaded', label: 'Were all required progress photos uploaded to Tradify?', options: ['Yes','No','N/A'], noteWhen: [], noteRequired: false, goodAnswers: ['Yes'] },
+  { id: 'timesheetsComplete', label: 'Are your Tradify timesheets complete and accurate?', options: ['Yes','No'], noteWhen: ['No'], notePrompt: 'What needs fixing?', noteRequired: false, goodAnswers: ['Yes'] },
+  { id: 'clientHappy', label: "Is the client happy with today's progress?", options: ['Yes','No','N/A'], noteWhen: ['No'], notePrompt: "What's the issue?", noteRequired: true, goodAnswers: ['Yes'] },
+  { id: 'officeAction', label: 'Is there anything the office needs to action before tomorrow?', options: ['Yes','No'], noteWhen: ['Yes'], notePrompt: 'What do they need to do?', noteRequired: true, goodAnswers: ['No'] },
+  { id: 'materialsToOrder', label: 'Are there any materials that need to be ordered?', options: ['Yes','No'], noteWhen: ['Yes'], notePrompt: "What's needed?", noteRequired: true, goodAnswers: ['No'] },
+  { id: 'readyTomorrow', label: "Do you have everything required for tomorrow's work?", options: ['Yes','No'], noteWhen: ['No'], notePrompt: "What's missing?", noteRequired: true, goodAnswers: ['Yes'] },
+  { id: 'safetyIncident', label: 'Were there any safety incidents, hazards or near misses today?', options: ['Yes','No'], noteWhen: ['Yes'], notePrompt: 'Please describe what happened', noteRequired: true, important: true, goodAnswers: ['No'] },
+  { id: 'qualityIssue', label: 'Were any defects, damage or quality issues identified today?', options: ['Yes','No'], noteWhen: ['Yes'], notePrompt: 'Please describe', noteRequired: true, goodAnswers: ['No'] },
+  { id: 'siteClean', label: 'Has the job site been left clean and tidy?', options: ['Yes','No','N/A'], noteWhen: ['No'], notePrompt: 'Why not?', noteRequired: true, goodAnswers: ['Yes'] },
+  { id: 'toolsPacked', label: 'Tools packed', options: ['Yes','No','N/A'], noteWhen: ['No'], notePrompt: 'Why not?', noteRequired: true, goodAnswers: ['Yes'] },
+  { id: 'plantSecured', label: 'Plant / equipment secured', options: ['Yes','No','N/A'], noteWhen: ['No'], notePrompt: 'Why not?', noteRequired: true, goodAnswers: ['Yes'] },
+  { id: 'wasteSorted', label: 'Has all rubbish been removed or properly stored?', options: ['Yes','No','N/A'], noteWhen: ['No'], notePrompt: 'Why not?', noteRequired: true, goodAnswers: ['Yes'] },
+  { id: 'goodDay', label: 'Did you have a good day?', options: ['Yes','No'], noteWhen: ['No'], notePrompt: 'What happened?', noteRequired: true, celebrateWhen: ['Yes'], celebrateEmoji: '😄', goodAnswers: ['Yes'] }
+];
+
+// Weekly Crew Leader KPI Scorecard (supervisors only, once per week).
+// Each KPI is rated 1-5. Add/remove/reorder items here — the form
+// and the total-score calculation both pick this up automatically.
+const WEEKLY_KPI = [
+  { id: 'safety', label: 'Safety' },
+  { id: 'productivity', label: 'Productivity' },
+  { id: 'quality', label: 'Quality' },
+  { id: 'leadership', label: 'Leadership' },
+  { id: 'communication', label: 'Communication' },
+  { id: 'companyStandards', label: 'Company standards' },
+  { id: 'ownershipInitiative', label: 'Ownership & initiative' },
+  { id: 'callBacksDefects', label: 'Call backs for defects' },
+  { id: 'unnecessaryCalls', label: 'Un-necessary calls' }
+];
+
+// Per-KPI "what does this mean" descriptions, from the Crew Leader
+// Expectations sheet (excellent vs poor performance examples).
+// Any KPI id not listed here falls back to the generic 1-5 rating guide.
+const KPI_DESCRIPTIONS = {
+  safety: {
+    summary: 'Protect yourself, your team and others. Safety is always our #1 priority.',
+    excellent: [
+      'Leads by example and promotes a strong safety culture.',
+      'Crew consistently follows SWMS and PPE requirements.',
+      'Site is clean, organised and hazard free.',
+      'Hazards are identified and addressed immediately.',
+      'Incidents and near misses reported promptly.',
+      'No preventable safety incidents.'
+    ],
+    poor: [
+      'Unsafe work practices.',
+      'Site left untidy or hazardous.',
+      'SWMS or PPE not followed.',
+      'Hazards ignored or left unresolved.',
+      'Safety shortcuts taken to save time.',
+      'Preventable incidents occur.'
+    ]
+  },
+  productivity: {
+    summary: 'Work efficiently, manage time well and keep projects moving forward.',
+    excellent: [
+      'Meets or exceeds the weekly programme.',
+      'Crew remains productive throughout the day.',
+      'Materials are organised before they are required.',
+      'Trades are coordinated efficiently.',
+      'Minimal downtime or waiting.',
+      'Thinks ahead and keeps the project moving.'
+    ],
+    poor: [
+      'Delays caused by poor planning.',
+      'Crew regularly waiting for instructions or materials.',
+      'Missed programme milestones.',
+      'Poor coordination of subcontractors.',
+      'Frequent downtime.',
+      'Reactive instead of proactive.'
+    ]
+  },
+  quality: {
+    summary: 'Deliver high quality workmanship that we are proud to put our name to.',
+    excellent: [
+      'High quality workmanship every day.',
+      'No client complaints.',
+      'Minimal defects or rework.',
+      'Finished work protected from damage.',
+      'Pride taken in presentation.',
+      'Consistently delivers the Designer Built standard.'
+    ],
+    poor: [
+      'Multiple defects.',
+      'Avoidable rework.',
+      'Poor attention to detail.',
+      'Client complaints.',
+      'Finished work damaged through poor care.',
+      'Work below Designer Built standards.'
+    ]
+  },
+  leadership: {
+    summary: 'Lead your team with respect, set the tone and get the best out of everyone.',
+    excellent: [
+      'Leads by example.',
+      'Apprentice is learning and improving.',
+      'Delegates work effectively.',
+      'Crew knows the daily plan.',
+      'Positive attitude and culture on site.',
+      'Holds the team accountable.'
+    ],
+    poor: [
+      'Apprentice receives little guidance.',
+      'Poor leadership or attitude.',
+      'Crew lacks direction.',
+      'Avoids difficult conversations.',
+      "Doesn't hold the team accountable.",
+      'Reactive leadership.'
+    ]
+  },
+  communication: {
+    summary: 'Communicate clearly with your team, clients and the office.',
+    excellent: [
+      'Makes informed decisions within their authority.',
+      'Solves problems before contacting the office.',
+      'Tradify updated with progress photos and notes.',
+      'Variations and site issues recorded promptly.',
+      'Professional communication with clients, suppliers and subcontractors.',
+      'Escalates issues early with recommended solutions.'
+    ],
+    poor: [
+      'Constant reliance on the office.',
+      'Tradify not maintained.',
+      'Poor communication with clients or trades.',
+      'Variations not documented.',
+      'Problems communicated too late.',
+      'Creates confusion or delays through poor communication.'
+    ]
+  },
+  companyStandards: {
+    summary: 'Represent Designer Built with pride and follow company processes.',
+    excellent: [
+      'All paperwork uploaded to Hubdoc every Friday.',
+      'Timesheets submitted on time.',
+      'Tradify maintained throughout the project.',
+      'Materials organised ahead of schedule.',
+      'Site presented professionally.',
+      'Represents Designer Built with pride.'
+    ],
+    poor: [
+      'Missing or late paperwork.',
+      'Late timesheets.',
+      'Tradify incomplete or not updated.',
+      'Materials not organised.',
+      'Untidy worksite.',
+      'Poor representation of the company.'
+    ]
+  },
+  ownershipInitiative: {
+    summary: 'Take ownership, think ahead and find a better way.',
+    excellent: [
+      'Takes ownership of every project.',
+      'Solves problems independently.',
+      'Protects company profit.',
+      'Looks for ways to improve systems.',
+      'Supports the team.',
+      "Makes the office's job easier."
+    ],
+    poor: [
+      'Waits to be told what to do.',
+      'Passes problems onto others.',
+      'Avoids responsibility.',
+      'Repeats the same mistakes.',
+      "Doesn't look for improvements.",
+      'Creates unnecessary work for the office.'
+    ]
+  }
+};
+
+// Generic 1-5 rating guide (fallback for any KPI without a specific
+// excellent/poor description above, e.g. Call backs / Un-necessary calls).
+const KPI_RATING_GUIDE = [
+  { score: 5, text: 'Consistently exceeds expectations. Demonstrates leadership, ownership and requires minimal support from the office.' },
+  { score: 4, text: 'Consistently performs to the expected Designer Built standard.' },
+  { score: 3, text: 'Meets the minimum standard but improvement is required in one or more areas.' },
+  { score: 2, text: 'Performance is below expectations and requires regular coaching and improvement.' },
+  { score: 1, text: 'Unsatisfactory performance requiring immediate improvement.' }
+];
+
+// Score bands out of 45 (9 KPIs x 5) -> weekly performance rating + bonus.
+const KPI_TIERS = [
+  { min: 40, max: 45, label: 'Outstanding week', bonus: 125 },
+  { min: 34, max: 39, label: 'Exceeded expectations', bonus: 75 },
+  { min: 28, max: 33, label: 'Met expectations', bonus: 25 },
+  { min: 21, max: 27, label: 'Improvement required', bonus: 0 },
+  { min: 0, max: 20, label: 'Performance improvement plan required', bonus: 0 }
+];
+
+// Morning JSA / SWMS — CJP-01 General Construction.
+// PPE list + hazard/control steps shown to crew each morning before
+// starting work. Edit freely — the form picks this up automatically.
+const JSA_PPE = [
+  'Safety footwear (steel-cap boots)',
+  'Hi-vis clothing',
+  'Safety glasses',
+  'Hearing protection with power tools',
+  'P1/P2 dust mask — cutting, sanding, demolition',
+  'Gloves for material handling',
+  'Hard hat where overhead hazards exist',
+  'Fall-arrest harness for work at height where required'
+];
+
+const JSA_STEPS = [
+  {
+    title: 'Site setup & access',
+    hazards: ['Slips, trips over gear, leads and debris', 'Manual handling of tools, materials and ladders', 'Unfamiliar site hazards'],
+    controls: ['Keep walkways and exits clear', 'Store materials tidily; run leads overhead or tape down', 'Walk the site and identify hazards before starting', 'Spill kit and first-aid on site']
+  },
+  {
+    title: 'Manual handling & materials',
+    hazards: ['Back/muscle strain lifting heavy or awkward materials', 'Crush injuries moving sheet materials, timber, tiles'],
+    controls: ['Team-lift or use trolleys/mechanical aids for heavy items', 'Plan the lift, keep loads close to the body', 'Rotate tasks to avoid fatigue']
+  },
+  {
+    title: 'Demolition & strip-out',
+    hazards: ['Structural collapse if load-bearing elements are removed', 'Dust inhalation (may contain silica)', 'Nails, screws and sharp debris'],
+    controls: ['Confirm load-bearing structure before removing anything', 'Wet-cut or use dust extraction', 'P2 respirator and safety glasses', 'Sharps swept up and binned immediately']
+  },
+  {
+    title: 'Working at height',
+    hazards: ['Falls from ladders, roofs, scaffolding, incomplete floors/stairwells'],
+    controls: ['Use podium/platform steps or scaffold in preference to ladders', 'Maintain 3 points of contact, no over-reaching', 'Inspect ladders/scaffold before use; tag out damaged gear', 'Harness and anchor point for roof work']
+  },
+  {
+    title: 'Power tools & equipment',
+    hazards: ['Lacerations, kickback, entanglement', 'Electric shock from damaged leads/tools'],
+    controls: ['Guards fitted and in place at all times', 'Visually inspect tools and test-and-tag leads before use', 'RCD/safety switch on all power tools', 'Correct PPE for the tool in use (glasses, gloves, hearing protection)']
+  },
+  {
+    title: 'Electrical & services awareness',
+    hazards: ['Contact with live wiring, gas or water lines when cutting/drilling'],
+    controls: ['Locate services before cutting/drilling into walls, floors or ceilings', 'Isolate power to the work area where required', 'Electrical and plumbing connections only by licensed trades']
+  },
+  {
+    title: 'Working near clients & the public',
+    hazards: ['Occupants/public struck by falling objects, tools or debris', 'Disturbance to occupied homes'],
+    controls: ['Exclusion zones and signage around active work areas', 'Keep noise to reasonable hours; communicate with occupants', 'Secure tools/materials so nothing can fall or be accessed by children']
+  },
+  {
+    title: 'Housekeeping & end of day',
+    hazards: ['Trip hazards from tools, leads and offcuts left lying around', 'Fire risk from oily rags or waste'],
+    controls: ['Clear walkways and pack away tools at the end of each day', 'Waste sorted and bins/skips used correctly', 'Site left clean, tidy and secure before leaving']
+  }
+];
+
+// QC completion checklist — trades + their detailed inspection items.
+// Add/remove/reorder trades or items here — the QC tab, validation and
+// the emailed QC report all pick this up automatically.
+const QC_TRADES = [
+  { id: 'electrical', label: 'ELECTRICAL', items: [
+    'Lights working', 'Switches working and straight', 'Power points working and straight',
+    'Exhaust fans working', 'Electrical fittings secure', 'No visible damage',
+    'Electrical fit out clean and complete'
+  ]},
+  { id: 'plumbing', label: 'PLUMBING', items: [
+    'Taps working', 'Hot and cold correct', 'No visible leaks', 'Toilets working correctly',
+    'Basins and sinks draining', 'Shower working', 'Bath working where applicable',
+    'Tapware straight and secure', 'Plumbing fixtures clean'
+  ]},
+  { id: 'tiling', label: 'TILING', items: [
+    'No chipped or damaged tiles', 'No excessive tile lippage', 'Tiles installed straight and aligned',
+    'Grout lines consistent', 'Grout completed properly', 'Silicone neat and complete',
+    'Tile trims neat and secure', 'Floor falls correct', 'No loose tiles', 'All surfaces cleaned'
+  ]},
+  { id: 'painting', label: 'PAINTING', items: [
+    'Correct colour', 'Walls and ceilings evenly painted', 'No visible runs', 'No missed areas',
+    'Cutting in neat', 'Doors and trims finished', 'Touch ups completed',
+    'No paint on fittings, tiles or flooring'
+  ]},
+  { id: 'plaster', label: 'PLASTER', items: [
+    'No visible cracks', 'No obvious dents', 'No visible plaster joins', 'Corners straight',
+    'Square set or cornice neat', 'Patches blend into existing surfaces', 'No obvious sanding defects'
+  ]},
+  { id: 'builders', label: 'BUILDERS', items: [
+    'Framing and structure sound', 'Levels and falls correct', 'Structural fixings complete',
+    'Waterproofing to code', 'Site safety compliance', 'General build quality acceptable'
+  ]},
+  { id: 'carpentry', label: 'CARPENTRY', items: [
+    'Skirting complete and neat', 'Architraves complete and neat', 'Timber work secure',
+    'Doors open and close correctly', 'Handles and locks work', 'Shelving secure', 'Trims complete',
+    'No visible damage', 'General workmanship acceptable'
+  ]},
+  { id: 'joinery', label: 'JOINERY', items: [
+    'Doors aligned', 'Drawers aligned', 'Doors open and close correctly', 'Drawers operate correctly',
+    'Handles straight and secure', 'Benchtops undamaged', 'Kickboards complete', 'Silicone neat',
+    'Joinery clean'
+  ]},
+  { id: 'flooring', label: 'FLOORING', items: [
+    'Flooring complete', 'No visible damage', 'No loose areas', 'Joins neat', 'Transitions neat',
+    'Trims complete', 'Flooring clean'
+  ]},
+  { id: 'showerScreens', label: 'SHOWER SCREENS / MIRRORS / WINDOWS', items: [
+    'Glass undamaged', 'Glass secure', 'Shower doors operate correctly', 'Handles secure',
+    'Silicone neat', 'Mirrors secure', 'Mirrors clean', 'Windows operate correctly',
+    'Window tracks and sills clean', 'Glass clean'
+  ]},
+  { id: 'fixtures', label: 'FIXTURES AND FINISHES', items: [
+    'Towel rails secure', 'Toilet roll holders secure', 'Hooks secure', 'Door stops installed',
+    'Hardware straight', 'Fixtures match selections'
+  ]},
+  { id: 'roofing', label: 'ROOFING', items: [
+    'Roofing visually complete', 'Flashings complete', 'Gutters complete', 'Downpipes connected'
+  ]},
+  { id: 'external', label: 'EXTERNAL', items: [
+    'External sealants complete', 'Cladding and trims complete', 'External work clean'
+  ]},
+  { id: 'finalClean', label: 'FINAL CLEAN', items: [
+    'Floors clean', 'Tiles clean', 'Windows clean', 'Cabinetry clean', 'Bathrooms clean',
+    'Fixtures clean', 'Construction rubbish removed', 'Leftover materials removed',
+    'Job ready to present to client'
+  ]}
+];
+
+// Final completion questions — shown once beneath the trade checklist,
+// using the same YES / NO / N/A colour system.
+const QC_COMPLETION_QUESTIONS = [
+  { id: 'clientHappy', label: 'IS THE CLIENT HAPPY?' },
+  { id: 'siteCleared', label: 'HAS EVERYTHING BEEN REMOVED FROM THE JOB SITE?' },
+  { id: 'siteClean', label: 'IS THE JOB SITE CLEAN?' }
+];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let selectedNames = [];
+let dailyState = {};
+DAILY_CHECKLIST.forEach(q => dailyState[q.id] = null);
+let kpiState = {};
+WEEKLY_KPI.forEach(k => kpiState[k.id] = null);
+let weeklyCheckState = { selfHoursCorrect: null, selfReceiptsUploaded: null };
+let selfKpiState = {};
+WEEKLY_KPI.forEach(k => selfKpiState[k.id] = null);
+const KPI_FORMS = {
+  kpi: { state: kpiState, totalBox: 'kpiTotalBox', self: false },
+  selfKpi: { state: selfKpiState, totalBox: 'selfKpiTotalBox', self: true }
+};
+let kpiSelfLoaded = null;
+let proofState = { jsa: null, eod: null };
+let proofLocation = { jsa: null, eod: null };
+let pinBuffer = "";
+let jsaState = { currentWorker: null, signed: {} };
+let jsaDrawing = false;
+let jsaLastPoint = null;
+let jsaHasSignature = false;
+let qcJobsDetailed = [];
+let qcState = { job: '', jobAddress: '', supervisor: '', trades: {}, completion: {}, notes: '' };
+QC_TRADES.forEach(t => { qcState.trades[t.id] = { status: null, photos: [], rectified: null, items: {} }; });
+QC_COMPLETION_QUESTIONS.forEach(q => { qcState.completion[q.id] = { status: null, reason: '' }; });
+
+/* ============================================================
+   INIT
+   ============================================================ */
+function init() {
+  buildNameGrid();
+  buildDailyChecklist();
+  buildWeeklyKpiCrewSelect();
+  buildKpiList('weeklyKpiList', 'kpi');
+  buildKpiList('selfKpiList', 'selfKpi');
+  setWeekDefaults();
+  buildJsaCrewGrid();
+  buildJsaSteps();
+  initJsaCanvas();
+  buildQcTrades();
+  buildQcSupervisorGrid();
+  setQcDate();
+  loadJobs();
+  document.getElementById('apprenticeCard').classList.add('hidden');
+
+  // Deep-link support: opening the app with #morning / #crew / #sup / #qc
+  // (e.g. from an SMS reminder link) jumps straight to that tab.
+  // '#punch' is kept as an alias so any old bookmarked links still work.
+  const hashTab = window.location.hash.replace('#', '');
+  const tabAliases = { morning: 'morning', crew: 'crew', sup: 'sup', qc: 'qc', punch: 'qc', mykpi: 'mykpi', kpi: 'mykpi' };
+  if (tabAliases[hashTab]) {
+    showTab(tabAliases[hashTab]);
+  }
+}
+
+function buildNameGrid() {
+  const grid = document.getElementById('nameGrid');
+  grid.innerHTML = "";
+  Object.keys(CREW).forEach(group => {
+    const label = document.createElement('div');
+    label.className = 'role-label';
+    label.textContent = group;
+    grid.appendChild(label);
+    const wrap = document.createElement('div');
+    wrap.className = 'name-grid';
+    CREW[group].forEach(person => {
+      const btn = document.createElement('button');
+      btn.className = 'pill';
+      btn.textContent = person.name;
+      btn.type = 'button';
+      btn.onclick = () => toggleName(person.name, person.role, btn);
+      wrap.appendChild(btn);
+    });
+    grid.appendChild(wrap);
+  });
+}
+
+function toggleName(name, role, btnEl) {
+  const idx = selectedNames.findIndex(p => p.name === name);
+  if (idx >= 0) {
+    selectedNames.splice(idx, 1);
+    btnEl.classList.remove('selected');
+  } else {
+    selectedNames.push({ name, role });
+    btnEl.classList.add('selected');
+  }
+  document.getElementById('apprenticeCard').classList.toggle('hidden', !selectedNames.some(p => p.role === 'Apprentice'));
+}
+
+function buildDailyChecklist() {
+  const container = document.getElementById('dailyChecklist');
+  container.innerHTML = DAILY_CHECKLIST.map(q => {
+    const buttons = q.options.map(opt => {
+      // Colour reflects whether this answer is good news (green) or needs
+      // attention (red) for THIS question — not a fixed Yes=green/No=red.
+      // N/A always renders green.
+      const isGood = opt === 'N/A' || (q.goodAnswers || []).includes(opt);
+      const cls = isGood ? 'sel-yes' : 'sel-no';
+      return `<button class="${cls}" data-opt="${opt}" onclick="setDaily('${q.id}','${opt}')">${opt}</button>`;
+    }).join('');
+    return `
+      <div class="gear-item${q.important ? ' important' : ''}" id="daily-${q.id}">
+        <label>${q.label}</label>
+        <div class="yesno" data-field="${q.id}">${buttons}</div>
+        <div class="note-box"><textarea placeholder="${q.notePrompt || ''}${q.noteRequired ? ' (required)' : ' (optional)'}" id="note-${q.id}"></textarea></div>
+        ${q.celebrateEmoji ? `<div class="smiley-box" id="smiley-${q.id}">${q.celebrateEmoji}</div>` : ''}
+      </div>`;
+  }).join('');
+}
+
+async function loadJobs() {
+  try {
+    const res = await fetch(`${API_URL}?action=jobs`);
+    const data = await res.json();
+    const jobs = data.jobs || [];
+    // jobDetails (with addresses) is optional — falls back gracefully on an
+    // older backend that only returns the plain jobs list.
+    qcJobsDetailed = data.jobDetails || jobs.map(j => ({ name: j, address: '' }));
+    const opts = '<option value="">Select job…</option>' + jobs.map(j => `<option value="${j}">${j}</option>`).join('');
+    document.getElementById('jobSelect').innerHTML = opts;
+    document.getElementById('jsaJobSelect').innerHTML = opts;
+    document.getElementById('qcJobSelect').innerHTML = opts;
+  } catch (e) {
+    document.getElementById('jobSelect').innerHTML = '<option value="">Could not load jobs — check connection</option>';
+  }
+}
+
+/* ============================================================
+   TABS
+   ============================================================ */
+function showTab(tab) {
+  document.getElementById('tab-morning').classList.toggle('hidden', tab !== 'morning');
+  document.getElementById('tab-crew').classList.toggle('hidden', tab !== 'crew');
+  document.getElementById('tab-sup').classList.toggle('hidden', tab !== 'sup');
+  document.getElementById('tab-qc').classList.toggle('hidden', tab !== 'qc');
+  document.getElementById('tab-mykpi').classList.toggle('hidden', tab !== 'mykpi');
+  document.getElementById('tabBtnMyKpi').classList.toggle('active', tab === 'mykpi');
+  document.getElementById('tabBtnMorning').classList.toggle('active', tab === 'morning');
+  document.getElementById('tabBtnCrew').classList.toggle('active', tab === 'crew');
+  document.getElementById('tabBtnSup').classList.toggle('active', tab === 'sup');
+  document.getElementById('tabBtnQC').classList.toggle('active', tab === 'qc');
+  if (tab === 'qc') setQcDate();
+}
+
+/* ============================================================
+   FLAGS
+   ============================================================ */
+function toggleFlag(name) {
+  const chk = document.getElementById('chk' + name);
+  const detail = document.getElementById('detail' + name);
+  const item = document.getElementById('flag' + name);
+  detail.classList.toggle('hidden', !chk.checked);
+  item.classList.toggle('active', chk.checked);
+}
+
+/* ============================================================
+   DAILY CHECKLIST (Tradify / office questions)
+   ============================================================ */
+function setDaily(id, value) {
+  dailyState[id] = value;
+  const container = document.querySelector(`#daily-${id} .yesno`);
+  container.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+  const btn = [...container.querySelectorAll('button')].find(b => b.dataset.opt === value);
+  if (btn) btn.classList.add('selected');
+
+  const q = DAILY_CHECKLIST.find(q => q.id === id);
+  const noteBox = document.getElementById('daily-' + id).querySelector('.note-box');
+  noteBox.classList.toggle('show', q.noteWhen.includes(value));
+
+  if (q.celebrateEmoji) {
+    const smiley = document.getElementById('smiley-' + id);
+    smiley.classList.toggle('show', q.celebrateWhen.includes(value));
+  }
+}
+
+/* ============================================================
+   SUBMIT EOD
+   ============================================================ */
+async function submitEod() {
+  if (!selectedNames.length) return alert('Please select who is signing off.');
+  const job = document.getElementById('jobSelect').value;
+  if (!job) return alert('Please select a job.');
+  const jobUpdate = document.getElementById('jobUpdate').value.trim();
+  if (!jobUpdate) return alert('Job update is required — where the job is at, what\'s left, any blockers.');
+  if (!proofState.eod) return alert('Please take a site photo before signing off (Site photo — finishing up).');
+
+  for (const q of DAILY_CHECKLIST) {
+    if (!dailyState[q.id]) return alert('Please answer: ' + q.label);
+    if (q.noteRequired && q.noteWhen.includes(dailyState[q.id]) && !document.getElementById('note-' + q.id).value.trim()) {
+      return alert('Please add a note for: ' + q.label);
+    }
+  }
+
+  const dailyPayload = {};
+  DAILY_CHECKLIST.forEach(q => {
+    dailyPayload[q.id] = dailyState[q.id];
+    const noteEl = document.getElementById('note-' + q.id);
+    dailyPayload[q.id + 'Note'] = noteEl ? noteEl.value.trim() : '';
+  });
+  // Map to the specific field names Code.gs expects
+  const payload = {
+    action: 'eod',
+    name: selectedNames.map(p => p.name).join(', '),
+    role: [...new Set(selectedNames.map(p => p.role))].join(', '),
+    job: job,
+    jobUpdate: jobUpdate,
+    flagDamage: document.getElementById('chkDamage').checked,
+    flagDamageDetail: document.getElementById('detailDamageText').value.trim(),
+    flagVariation: document.getElementById('chkVariation').checked,
+    flagVariationDetail: document.getElementById('detailVariationText').value.trim(),
+    variationHours: document.getElementById('variationHours').value,
+    flagHoldUp: document.getElementById('chkHoldUp').checked,
+    flagHoldUpDetail: document.getElementById('detailHoldUpText').value.trim(),
+    flagMaterials: document.getElementById('chkMaterials').checked,
+    flagMaterialsDetail: document.getElementById('detailMaterialsText').value.trim(),
+    siteClean: dailyPayload.siteClean,
+    siteCleanNote: dailyPayload.siteCleanNote,
+    toolsPacked: dailyPayload.toolsPacked,
+    toolsPackedNote: dailyPayload.toolsPackedNote,
+    plantSecured: dailyPayload.plantSecured,
+    plantSecuredNote: dailyPayload.plantSecuredNote,
+    wasteSorted: dailyPayload.wasteSorted,
+    wasteSortedNote: dailyPayload.wasteSortedNote,
+    otherNotes: document.getElementById('otherNotes').value.trim(),
+    apprenticeReflection: selectedNames.some(p => p.role === 'Apprentice') ? document.getElementById('apprenticeReflection').value.trim() : '',
+
+    tasksCompleted: dailyPayload.tasksCompleted,
+    tasksOutstanding: dailyPayload.tasksCompletedNote,
+    scheduleImpact: dailyPayload.scheduleImpact,
+    scheduleImpactDetail: dailyPayload.scheduleImpactNote,
+    photosTaken: dailyPayload.photosTaken,
+    photosUploaded: dailyPayload.photosUploaded,
+    timesheetsComplete: dailyPayload.timesheetsComplete,
+    timesheetsNote: dailyPayload.timesheetsCompleteNote,
+    clientHappy: dailyPayload.clientHappy,
+    clientHappyDetail: dailyPayload.clientHappyNote,
+    officeAction: dailyPayload.officeAction,
+    officeActionDetail: dailyPayload.officeActionNote,
+    materialsToOrder: dailyPayload.materialsToOrder,
+    materialsToOrderDetail: dailyPayload.materialsToOrderNote,
+    readyTomorrow: dailyPayload.readyTomorrow,
+    readyTomorrowDetail: dailyPayload.readyTomorrowNote,
+    safetyIncident: dailyPayload.safetyIncident,
+    safetyIncidentDetail: dailyPayload.safetyIncidentNote,
+    qualityIssue: dailyPayload.qualityIssue,
+    qualityIssueDetail: dailyPayload.qualityIssueNote,
+    goodDay: dailyPayload.goodDay,
+    goodDayDetail: dailyPayload.goodDayNote,
+    proof: proofState.eod
+  };
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting…';
+
+  try {
+    await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload)
+    });
+    showToast('Submitted — nice work!');
+    resetForm();
+  } catch (e) {
+    showToast('Could not submit — check your connection and try again.', true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Submit end-of-day';
+  }
+}
+
+function resetForm() {
+  selectedNames = [];
+  DAILY_CHECKLIST.forEach(q => dailyState[q.id] = null);
+  document.querySelectorAll('#nameGrid .pill').forEach(b => b.classList.remove('selected'));
+  document.getElementById('jobSelect').value = '';
+  document.getElementById('jobUpdate').value = '';
+  ['Damage','Variation','HoldUp','Materials'].forEach(f => {
+    document.getElementById('chk' + f).checked = false;
+    toggleFlag(f);
+    const t = document.getElementById('detail' + f + 'Text');
+    if (t) t.value = '';
+  });
+  document.getElementById('variationHours').value = '';
+  document.querySelectorAll('.yesno button').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.note-box').forEach(n => { n.classList.remove('show'); n.querySelector('textarea').value = ''; });
+  document.querySelectorAll('.smiley-box').forEach(s => s.classList.remove('show'));
+  document.getElementById('otherNotes').value = '';
+  document.getElementById('apprenticeReflection').value = '';
+  document.getElementById('apprenticeCard').classList.add('hidden');
+  resetProof('eod');
+  window.scrollTo(0, 0);
+}
+
+function showToast(msg, isError) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+/* ============================================================
+   WEEKLY KPI SCORECARD (supervisors only)
+   ============================================================ */
+function buildWeeklyKpiCrewSelect() {
+  const opts = '<option value="">Select…</option>' +
+    KPI_SCORED.map(n => `<option value="${n}">${n}</option>`).join('');
+  document.getElementById('kpiCrewLeader').innerHTML = opts;
+  document.getElementById('selfKpiName').innerHTML = opts;
+}
+
+// Builds the 9-KPI rating list. prefix = 'kpi' (Charlie's assessment)
+// or 'selfKpi' (crew self-assessment).
+function buildKpiList(containerId, prefix) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = WEEKLY_KPI.map(k => {
+    const buttons = [1, 2, 3, 4, 5].map(n =>
+      `<button class="rate-${n}" onclick="setKpiRating('${prefix}','${k.id}',${n})" id="${prefix}-${k.id}-${n}">${n}</button>`
+    ).join('');
+    const desc = KPI_DESCRIPTIONS[k.id];
+    const descHtml = desc
+      ? `<div class="kpi-desc-summary">${desc.summary}</div>
+         <div class="kpi-desc-col excellent"><b>✔ Excellent performance</b><ul>${desc.excellent.map(x => `<li>${x}</li>`).join('')}</ul></div>
+         <div class="kpi-desc-col poor"><b>✘ Poor performance</b><ul>${desc.poor.map(x => `<li>${x}</li>`).join('')}</ul></div>`
+      : KPI_RATING_GUIDE.map(g => `<div><b>${g.score}</b> — ${g.text}</div>`).join('');
+    return `
+      <div class="kpi-item">
+        <label class="kpi-label" onclick="toggleKpiDesc('${prefix}','${k.id}')">${k.label} <span class="info-icon">What does this mean? ⓘ</span></label>
+        <div class="kpi-desc" id="${prefix}Desc-${k.id}">${descHtml}</div>
+        <div class="kpi-self-score hidden" id="${prefix}Self-${k.id}"></div>
+        <div class="rating-buttons" data-field="${prefix}-${k.id}">${buttons}</div>
+        <textarea class="kpi-comment" placeholder="Comments (optional)" id="${prefix}Note-${k.id}"></textarea>
+      </div>`;
+  }).join('');
+}
+
+function toggleKpiDesc(prefix, id) {
+  document.getElementById(prefix + 'Desc-' + id).classList.toggle('show');
+}
+
+function setKpiRating(prefix, id, value) {
+  KPI_FORMS[prefix].state[id] = value;
+  const group = document.querySelector(`.rating-buttons[data-field="${prefix}-${id}"]`);
+  group.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+  document.getElementById(`${prefix}-${id}-${value}`).classList.add('selected');
+  updateKpiTotal(prefix);
+}
+
+function updateKpiTotal(prefix) {
+  const form = KPI_FORMS[prefix];
+  const answered = WEEKLY_KPI.map(k => form.state[k.id]).filter(v => v != null);
+  const total = answered.reduce((a, b) => a + b, 0);
+  const box = document.getElementById(form.totalBox);
+  if (answered.length < WEEKLY_KPI.length) {
+    box.innerHTML = `<b>Total score:</b> ${total} / 45 — rate all ${WEEKLY_KPI.length} KPIs to see the result`;
+    return;
+  }
+  const tier = KPI_TIERS.find(t => total >= t.min && total <= t.max);
+  box.innerHTML = form.self
+    ? `<b>Your score:</b> ${total} / 45 — ${tier.label}<br><span class="helper">${BOSS_NAME} sets the final score and bonus.</span>`
+    : `<b>Final score:</b> ${total} / 45<br><b>${tier.label}</b> — Bonus: $${tier.bonus}`;
+}
+
+function setWeeklyCheck(field, value) {
+  weeklyCheckState[field] = value;
+  const container = document.querySelector(`.yesno[data-field="${field}"]`);
+  container.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+  if (value === 'Yes') container.querySelector('.sel-yes').classList.add('selected');
+  if (value === 'No') container.querySelector('.sel-no').classList.add('selected');
+}
+
+function setWeekDefaults() {
+  const now = new Date();
+  const day = now.getDay();
+  const monday = new Date(now);
+  monday.setDate(now.getDate() + (day === 0 ? -6 : 1 - day));
+  const friday = new Date(monday);
+  friday.setDate(monday.getDate() + 4);
+  const fmt = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  ['kpiWeekStart', 'selfKpiWeekStart'].forEach(id => document.getElementById(id).value = fmt(monday));
+  ['kpiWeekEnd', 'selfKpiWeekEnd'].forEach(id => document.getElementById(id).value = fmt(friday));
+}
+
+/* ---------- Crew self-assessment ---------- */
+async function submitSelfKpi() {
+  const name = document.getElementById('selfKpiName').value;
+  if (!name) return alert('Select your name.');
+  const weekStart = document.getElementById('selfKpiWeekStart').value;
+  const weekEnd = document.getElementById('selfKpiWeekEnd').value;
+  if (!weekStart || !weekEnd) return alert("Please set the week's start and end dates.");
+  for (const k of WEEKLY_KPI) {
+    if (!selfKpiState[k.id]) return alert('Please rate yourself on: ' + k.label);
+  }
+  if (!weeklyCheckState.selfHoursCorrect) return alert('Please answer: Are your hours done and correct?');
+  if (!weeklyCheckState.selfReceiptsUploaded) return alert('Please answer: Are all your receipts uploaded with the job number?');
+
+  const total = WEEKLY_KPI.reduce((sum, k) => sum + selfKpiState[k.id], 0);
+  const payload = { action: 'kpi_self', name, weekStart, weekEnd, selfTotal: total };
+  WEEKLY_KPI.forEach(k => {
+    payload[k.id] = selfKpiState[k.id];
+    payload[k.id + 'Note'] = document.getElementById('selfKpiNote-' + k.id).value.trim();
+  });
+  payload.biggestWin = document.getElementById('selfBiggestWin').value.trim();
+  payload.biggestChallenge = document.getElementById('selfBiggestChallenge').value.trim();
+  payload.areasImprovement = document.getElementById('selfAreasImprovement').value.trim();
+  payload.goalsNextWeek = document.getElementById('selfGoalsNextWeek').value.trim();
+  payload.officeSupport = document.getElementById('selfOfficeSupport').value.trim();
+  payload.hoursCorrect = weeklyCheckState.selfHoursCorrect;
+  payload.receiptsUploaded = weeklyCheckState.selfReceiptsUploaded;
+
+  const btn = document.getElementById('selfKpiSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  try {
+    await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(payload) });
+    showToast(`KPI sent to ${BOSS_NAME} for review`);
+    resetSelfKpiForm();
+  } catch (e) {
+    showToast('Could not send KPI — check your connection and try again.', true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = `Send my KPI to ${BOSS_NAME}`;
+  }
+}
+
+function resetSelfKpiForm() {
+  WEEKLY_KPI.forEach(k => selfKpiState[k.id] = null);
+  weeklyCheckState.selfHoursCorrect = null;
+  weeklyCheckState.selfReceiptsUploaded = null;
+  document.getElementById('selfKpiName').value = '';
+  setWeekDefaults();
+  document.querySelectorAll('#selfKpiSection .rating-buttons button, #selfKpiSection .yesno button').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('#selfKpiSection .kpi-comment, #selfKpiSection textarea').forEach(t => t.value = '');
+  document.querySelectorAll('#selfKpiSection .kpi-desc').forEach(d => d.classList.remove('show'));
+  document.getElementById('selfKpiTotalBox').innerHTML = 'Total score: 0 / 45';
+  window.scrollTo(0, 0);
+}
+
+/* ---------- Charlie's review ---------- */
+function escHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+async function loadSelfKpiForReview() {
+  const name = document.getElementById('kpiCrewLeader').value;
+  const weekStart = document.getElementById('kpiWeekStart').value;
+  const panel = document.getElementById('kpiSelfPanel');
+  kpiSelfLoaded = null;
+  WEEKLY_KPI.forEach(k => document.getElementById('kpiSelf-' + k.id).classList.add('hidden'));
+  if (!name || !weekStart) { panel.classList.add('hidden'); return; }
+  panel.classList.remove('hidden');
+  panel.innerHTML = 'Loading ' + escHtml(name) + "'s self-assessment…";
+  try {
+    const res = await fetch(`${API_URL}?action=kpi_self&name=${encodeURIComponent(name)}&weekStart=${encodeURIComponent(weekStart)}`);
+    const data = await res.json();
+    const e = data.entry;
+    if (!e) {
+      panel.innerHTML = `<b>${escHtml(name)} hasn't sent a self-assessment for this week yet.</b> You can still score them.`;
+      return;
+    }
+    kpiSelfLoaded = e;
+    const tier = KPI_TIERS.find(t => e.selfTotal >= t.min && e.selfTotal <= t.max) || { label: '' };
+    let html = `<p><b>${escHtml(name)}'s own score: ${escHtml(e.selfTotal)} / 45</b> — ${escHtml(tier.label)}</p>`;
+    if (e.weekMismatch) html += `<p style="color:var(--danger)"><b>Note:</b> this is their latest one, for the week starting ${escHtml(e.weekStart)}.</p>`;
+    if (e.status === 'Assessed') html += `<p style="color:var(--danger)"><b>You've already assessed this one</b> — submitting again adds a second record.</p>`;
+    html += `<p>Hours done & correct: <b>${escHtml(e.hoursCorrect)}</b> · Receipts uploaded: <b>${escHtml(e.receiptsUploaded)}</b></p>`;
+    [['Biggest win', e.biggestWin], ['Biggest challenge', e.biggestChallenge], ['Where they can improve', e.areasImprovement],
+     ['Their goals for next week', e.goalsNextWeek], ['Support they want', e.officeSupport]].forEach(([l, v]) => {
+      if (v) html += `<p><b>${l}:</b> ${escHtml(v)}</p>`;
+    });
+    html += `<p class="helper">Their rating is shown under each KPI below. Give your own rating — yours sets the bonus.</p>`;
+    panel.innerHTML = html;
+    WEEKLY_KPI.forEach(k => {
+      const el = document.getElementById('kpiSelf-' + k.id);
+      const note = e[k.id + 'Note'];
+      el.innerHTML = `${escHtml(name)} rated themselves: <b>${escHtml(e[k.id])}</b>${note ? ' — ' + escHtml(note) : ''}`;
+      el.classList.remove('hidden');
+    });
+  } catch (err) {
+    panel.innerHTML = 'Could not load their self-assessment — check your connection.';
+  }
+}
+
+async function submitWeeklyKpi() {
+  const crewLeader = document.getElementById('kpiCrewLeader').value;
+  if (!crewLeader) return alert('Select a crew member.');
+  const weekStart = document.getElementById('kpiWeekStart').value;
+  const weekEnd = document.getElementById('kpiWeekEnd').value;
+  if (!weekStart || !weekEnd) return alert("Please set the week's start and end dates.");
+
+  for (const k of WEEKLY_KPI) {
+    if (!kpiState[k.id]) return alert('Please rate: ' + k.label);
+  }
+
+  const total = WEEKLY_KPI.reduce((sum, k) => sum + kpiState[k.id], 0);
+  const tier = KPI_TIERS.find(t => total >= t.min && total <= t.max);
+  const s = kpiSelfLoaded || {};
+
+  const payload = { action: 'weekly_kpi', crewLeader, weekStart, weekEnd };
+  WEEKLY_KPI.forEach(k => {
+    payload[k.id] = kpiState[k.id];
+    payload[k.id + 'Note'] = document.getElementById('kpiNote-' + k.id).value.trim();
+    payload['self_' + k.id] = s[k.id] || '';
+    payload['self_' + k.id + 'Note'] = s[k.id + 'Note'] || '';
+  });
+  payload.totalScore = total;
+  payload.performanceRating = tier.label;
+  payload.bonusEarned = tier.bonus;
+  payload.biggestWin = document.getElementById('kpiBiggestWin').value.trim();
+  payload.areasImprovement = document.getElementById('kpiAreasImprovement').value.trim();
+  payload.goalsNextWeek = document.getElementById('kpiGoalsNextWeek').value.trim();
+  payload.hoursCorrect = s.hoursCorrect || '';
+  payload.receiptsUploaded = s.receiptsUploaded || '';
+  payload.selfRow = s.row || '';
+  payload.selfTotal = s.selfTotal || '';
+  payload.selfBiggestWin = s.biggestWin || '';
+  payload.selfBiggestChallenge = s.biggestChallenge || '';
+  payload.selfAreasImprovement = s.areasImprovement || '';
+  payload.selfGoalsNextWeek = s.goalsNextWeek || '';
+  payload.selfOfficeSupport = s.officeSupport || '';
+
+  try {
+    await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload)
+    });
+    showToast('Final KPI submitted');
+    resetWeeklyKpiForm();
+  } catch (e) {
+    showToast('Could not submit weekly KPI', true);
+  }
+}
+
+function resetWeeklyKpiForm() {
+  WEEKLY_KPI.forEach(k => kpiState[k.id] = null);
+  kpiSelfLoaded = null;
+  document.getElementById('kpiCrewLeader').value = '';
+  setWeekDefaults();
+  document.getElementById('kpiSelfPanel').classList.add('hidden');
+  WEEKLY_KPI.forEach(k => document.getElementById('kpiSelf-' + k.id).classList.add('hidden'));
+  document.querySelectorAll('#weeklyKpiSection .rating-buttons button').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('#weeklyKpiSection .kpi-comment').forEach(t => t.value = '');
+  document.querySelectorAll('#weeklyKpiSection .kpi-desc').forEach(d => d.classList.remove('show'));
+  document.getElementById('kpiTotalBox').innerHTML = 'Total score: 0 / 45';
+  ['kpiBiggestWin', 'kpiAreasImprovement', 'kpiGoalsNextWeek'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+}
+
+/* ============================================================
+   SITE PHOTO PROOF (JSA + end of day)
+   Photo is taken live with the camera, checked for age, then the
+   date/time + GPS location are burned into the image itself.
+   ============================================================ */
+function getLocation_() {
+  return new Promise(resolve => {
+    if (!navigator.geolocation) return resolve({ error: 'Location not supported on this phone' });
+    navigator.geolocation.getCurrentPosition(
+      p => resolve({ lat: p.coords.latitude, lng: p.coords.longitude, accuracy: Math.round(p.coords.accuracy) }),
+      err => resolve({ error: err.code === 1 ? 'Location permission denied' : 'Could not get GPS location' }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 60000 }
+    );
+  });
+}
+
+function takeProofPhoto(key) {
+  // Start getting GPS straight away (while the camera is open)
+  proofLocation[key] = getLocation_();
+  document.getElementById('proofInput-' + key).click();
+}
+
+// Reads the camera's "date taken" (EXIF DateTimeOriginal) from a JPEG, if present.
+function readExifDate_(buf) {
+  try {
+    const v = new DataView(buf);
+    if (v.getUint16(0) !== 0xFFD8) return null;
+    let off = 2;
+    while (off < v.byteLength - 4) {
+      const marker = v.getUint16(off);
+      const size = v.getUint16(off + 2);
+      if (marker === 0xFFE1 && v.getUint32(off + 4) === 0x45786966) {
+        const tiff = off + 10;
+        const little = v.getUint16(tiff) === 0x4949;
+        const u16 = o => v.getUint16(o, little), u32 = o => v.getUint32(o, little);
+        const findTag = (ifd, tag) => {
+          const n = u16(ifd);
+          for (let i = 0; i < n; i++) {
+            const e = ifd + 2 + i * 12;
+            if (u16(e) === tag) return e;
+          }
+          return null;
+        };
+        const ifd0 = tiff + u32(tiff + 4);
+        const exifPtr = findTag(ifd0, 0x8769);
+        if (!exifPtr) return null;
+        const exifIfd = tiff + u32(exifPtr + 8);
+        const dt = findTag(exifIfd, 0x9003) || findTag(exifIfd, 0x9004);
+        if (!dt) return null;
+        const strOff = tiff + u32(dt + 8);
+        let s = '';
+        for (let i = 0; i < 19; i++) s += String.fromCharCode(v.getUint8(strOff + i));
+        const m = s.match(/^(\d{4}):(\d{2}):(\d{2}) (\d{2}):(\d{2}):(\d{2})$/);
+        if (!m) return null;
+        return new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]);
+      }
+      if ((marker & 0xFF00) !== 0xFF00) break;
+      off += 2 + size;
+    }
+  } catch (e) { /* no usable EXIF */ }
+  return null;
+}
+
+function loadImage_(file) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => { resolve(img); setTimeout(() => URL.revokeObjectURL(url), 1000); };
+    img.onerror = reject;
+    img.src = url;
+  });
+}
+
+async function handleProofPhoto(key, inputEl) {
+  const file = inputEl.files && inputEl.files[0];
+  inputEl.value = '';
+  if (!file) return;
+  const info = document.getElementById('proofInfo-' + key);
+  info.className = 'proof-info';
+  info.textContent = 'Stamping photo with time and location…';
+
+  const now = new Date();
+  let exifDate = null;
+  try { exifDate = readExifDate_(await file.slice(0, 131072).arrayBuffer()); } catch (e) {}
+  const takenAt = exifDate || (file.lastModified ? new Date(file.lastModified) : now);
+  const ageMin = (now - takenAt) / 60000;
+  if (ageMin > PROOF_MAX_AGE_MIN) {
+    proofState[key] = null;
+    document.getElementById('proofImg-' + key).classList.add('hidden');
+    info.className = 'proof-info warn';
+    info.textContent = `That photo was taken ${Math.round(ageMin)} minutes ago. Please take a NEW photo now with the camera.`;
+    return;
+  }
+
+  const loc = await (proofLocation[key] || getLocation_());
+  let img;
+  try { img = await loadImage_(file); } catch (e) {
+    info.className = 'proof-info warn';
+    info.textContent = 'Could not read that photo — please try again.';
+    return;
+  }
+
+  const maxDim = 1600;
+  let w = img.naturalWidth, h = img.naturalHeight;
+  if (w > maxDim || h > maxDim) {
+    if (w > h) { h = Math.round(h * maxDim / w); w = maxDim; } else { w = Math.round(w * maxDim / h); h = maxDim; }
+  }
+  const canvas = document.createElement('canvas');
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0, w, h);
+
+  const stampTime = now.toLocaleString('en-AU', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+  const job = key === 'jsa' ? document.getElementById('jsaJobSelect').value : document.getElementById('jobSelect').value;
+  const lines = [
+    `DESIGNER BUILT · ${key === 'jsa' ? 'JOB START' : 'JOB END'}${job ? ' · ' + job : ''}`,
+    stampTime,
+    loc.error ? `NO GPS — ${loc.error}` : `GPS ${loc.lat.toFixed(5)}, ${loc.lng.toFixed(5)} (±${loc.accuracy} m)`
+  ];
+  const fs = Math.max(16, Math.round(w / 38));
+  const pad = Math.round(fs * 0.6);
+  const barH = lines.length * fs * 1.3 + pad * 2;
+  ctx.fillStyle = 'rgba(0,0,0,0.6)';
+  ctx.fillRect(0, h - barH, w, barH);
+  ctx.font = `bold ${fs}px sans-serif`;
+  ctx.textBaseline = 'top';
+  lines.forEach((t, i) => {
+    ctx.fillStyle = (i === 2 && loc.error) ? '#ff6b6b' : '#ffffff';
+    ctx.fillText(t, pad, h - barH + pad + i * fs * 1.3, w - pad * 2);
+  });
+
+  const dataUrl = canvas.toDataURL('image/jpeg', 0.75);
+  proofState[key] = {
+    photo: dataUrl,
+    takenAt: takenAt.toISOString(),
+    stampedAt: now.toISOString(),
+    exifTime: exifDate ? exifDate.toISOString() : '',
+    lat: loc.lat == null ? '' : loc.lat,
+    lng: loc.lng == null ? '' : loc.lng,
+    accuracy: loc.accuracy == null ? '' : loc.accuracy,
+    locationError: loc.error || ''
+  };
+  const prev = document.getElementById('proofImg-' + key);
+  prev.src = dataUrl;
+  prev.classList.remove('hidden');
+  if (loc.error) {
+    info.className = 'proof-info warn';
+    info.textContent = `Photo saved, but no GPS (${loc.error}). Turn on Location for your browser and retake if you can — ${BOSS_NAME} will see there was no location.`;
+  } else {
+    info.className = 'proof-info good';
+    info.textContent = `✔ Photo stamped ${stampTime} with GPS location. Tap the button again to retake.`;
+  }
+}
+
+function resetProof(key) {
+  proofState[key] = null;
+  proofLocation[key] = null;
+  const img = document.getElementById('proofImg-' + key);
+  img.src = '';
+  img.classList.add('hidden');
+  const info = document.getElementById('proofInfo-' + key);
+  info.className = 'proof-info';
+  info.textContent = '';
+}
+
+/* ============================================================
+   SUPERVISOR TAB
+   ============================================================ */
+function pinPress(d) {
+  if (pinBuffer.length >= 4) return;
+  pinBuffer += d;
+  renderPinDots();
+  if (pinBuffer.length === 4) checkPin();
+}
+function pinBackspace() { pinBuffer = pinBuffer.slice(0, -1); renderPinDots(); }
+function pinClear() { pinBuffer = ""; renderPinDots(); }
+function renderPinDots() {
+  document.getElementById('pinDots').textContent = '●'.repeat(pinBuffer.length) + '○'.repeat(4 - pinBuffer.length);
+}
+function checkPin() {
+  if (pinBuffer === SUPERVISOR_PIN) {
+    document.getElementById('pinScreen').classList.add('hidden');
+    document.getElementById('supDashboard').classList.remove('hidden');
+    loadSupervisorSummary();
+  } else {
+    showToast('Wrong PIN', true);
+    setTimeout(() => { pinBuffer = ""; renderPinDots(); }, 600);
+  }
+}
+
+async function loadSupervisorSummary() {
+  const allNames = Object.values(CREW).flat().map(p => p.name);
+  document.getElementById('dashDate').textContent = new Date().toLocaleDateString('en-AU');
+  try {
+    const res = await fetch(`${API_URL}?action=summary`);
+    const data = await res.json();
+    document.getElementById('dashSubmittedCount').textContent = `${data.submitted.length} / ${allNames.length}`;
+    const outstanding = allNames.filter(n => !data.submitted.includes(n));
+    document.getElementById('dashOutstanding').innerHTML = outstanding.length
+      ? outstanding.map(n => `<span class="badge warn">${n}</span>`).join(' ')
+      : '<span class="badge ok">All in</span>';
+    document.getElementById('dashVarHours').textContent = data.totalVariationHours || 0;
+
+    const flagsEl = document.getElementById('dashFlags');
+    if (!data.flags.length) {
+      flagsEl.innerHTML = '<p class="helper">No flags today.</p>';
+    } else {
+      flagsEl.innerHTML = data.flags.map(f => `
+        <div class="flag-log-item">
+          <strong>${f.type}</strong> — ${f.name} (${f.job})<br>
+          <span class="helper">${f.detail || 'No detail provided'}</span>
+        </div>`).join('');
+    }
+  } catch (e) {
+    showToast('Could not load summary', true);
+  }
+}
+
+/* ============================================================
+   QC TAB — fast completion checklist
+   ============================================================ */
+function buildQcSupervisorGrid() {
+  const grid = document.getElementById('qcSupervisorGrid');
+  grid.innerHTML = '';
+  const everyone = Object.values(CREW).flat();
+  everyone.forEach(p => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'pill';
+    btn.textContent = p.name;
+    btn.onclick = () => selectQcSupervisor(p.name, btn);
+    grid.appendChild(btn);
+  });
+}
+
+function selectQcSupervisor(name, btnEl) {
+  qcState.supervisor = name;
+  document.querySelectorAll('#qcSupervisorGrid .pill').forEach(b => b.classList.remove('selected'));
+  btnEl.classList.add('selected');
+}
+
+function setQcDate() {
+  const el = document.getElementById('qcDate');
+  if (el) el.textContent = new Date().toLocaleDateString('en-AU');
+}
+
+function onQcJobChange() {
+  const job = document.getElementById('qcJobSelect').value;
+  qcState.job = job;
+  const match = qcJobsDetailed.find(j => j.name === job);
+  qcState.jobAddress = match ? (match.address || '') : '';
+  document.getElementById('qcJobAddress').textContent = qcState.jobAddress ? ('Address: ' + qcState.jobAddress) : '';
+}
+
+function buildQcTrades() {
+  const container = document.getElementById('qcTradesList');
+  container.innerHTML = QC_TRADES.map(t => `
+    <div class="card qc-trade" id="qc-trade-${t.id}">
+      <div class="qc-trade-head">
+        <h2>${t.label}</h2>
+        <button type="button" class="qc-caret" id="qc-caret-${t.id}" onclick="toggleQcDetail('${t.id}')">▾</button>
+      </div>
+      <div class="yesno qc-yesno" data-trade="${t.id}">
+        <button class="sel-yes" data-opt="Yes" onclick="setQcStatus('${t.id}','Yes')">YES</button>
+        <button class="sel-no" data-opt="No" onclick="setQcStatus('${t.id}','No')">NO</button>
+        <button class="sel-yes" data-opt="N/A" onclick="setQcStatus('${t.id}','N/A')">N/A</button>
+      </div>
+
+      <div class="qc-defect-box" id="qc-defect-${t.id}">
+        <label>Photo <span class="required-star">*</span></label>
+        <div class="qc-photo-row" id="qc-photos-${t.id}">
+          <label class="qc-photo-btn">+
+            <input type="file" accept="image/*" capture="environment" multiple style="display:none" onchange="handleQcPhoto('${t.id}', this)">
+          </label>
+        </div>
+
+        <label>What's the defect? <span class="required-star">*</span></label>
+        <textarea id="qc-desc-${t.id}" placeholder="Short description"></textarea>
+
+        <label>Responsible trade / person (if known)</label>
+        <input type="text" id="qc-resp-${t.id}" placeholder="e.g. Josh, or the tiler">
+
+        <label>Rectified on the spot? <span class="required-star">*</span></label>
+        <div class="yesno" data-field="qc-rect-${t.id}">
+          <button class="sel-yes" onclick="setQcRectified('${t.id}','Yes')">YES</button>
+          <button class="sel-no" onclick="setQcRectified('${t.id}','No')">NO</button>
+        </div>
+      </div>
+
+      <div class="qc-detail" id="qc-detail-${t.id}">
+        ${t.items.map((item, i) => `
+          <div class="qc-item" id="qc-item-${t.id}-${i}" onclick="toggleQcItem('${t.id}',${i})">
+            <span class="qc-item-check">✓</span><span class="qc-item-text">${item}</span>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function toggleQcDetail(id) {
+  document.getElementById('qc-detail-' + id).classList.toggle('show');
+  document.getElementById('qc-caret-' + id).classList.toggle('open');
+}
+
+// Ticking an individual checklist item just marks it inspected & passed —
+// it turns green so it's obvious at a glance what's been checked. A failed
+// item doesn't get ticked; the trade itself gets marked NO instead, which
+// drives the defect capture below.
+function toggleQcItem(tradeId, idx) {
+  const st = qcState.trades[tradeId];
+  st.items[idx] = !st.items[idx];
+  document.getElementById(`qc-item-${tradeId}-${idx}`).classList.toggle('checked', !!st.items[idx]);
+}
+
+function setQcStatus(id, value) {
+  qcState.trades[id].status = value;
+  const group = document.querySelector(`.qc-yesno[data-trade="${id}"]`);
+  group.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+  const btn = [...group.querySelectorAll('button')].find(b => b.dataset.opt === value);
+  if (btn) btn.classList.add('selected');
+  document.getElementById('qc-defect-' + id).classList.toggle('show', value === 'No');
+
+  // Selecting YES automatically opens the detailed checklist underneath —
+  // NO keeps its existing behaviour (defect box only; the detail list can
+  // still be opened manually via the arrow if needed). N/A means there's
+  // nothing to inspect, so the expand arrow is hidden entirely — no
+  // dropdown needed.
+  const detail = document.getElementById('qc-detail-' + id);
+  const caret = document.getElementById('qc-caret-' + id);
+  if (value === 'N/A') {
+    detail.classList.remove('show');
+    caret.classList.remove('open');
+    caret.classList.add('hidden');
+  } else {
+    caret.classList.remove('hidden');
+    if (value === 'Yes') {
+      detail.classList.add('show');
+      caret.classList.add('open');
+    }
+  }
+  updateQcSummary();
+}
+
+function setQcRectified(id, value) {
+  qcState.trades[id].rectified = value;
+  const group = document.querySelector(`.yesno[data-field="qc-rect-${id}"]`);
+  group.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+  if (value === 'Yes') group.querySelector('.sel-yes').classList.add('selected');
+  if (value === 'No') group.querySelector('.sel-no').classList.add('selected');
+  updateQcSummary();
+}
+
+function setQcCompletion(id, value) {
+  qcState.completion[id].status = value;
+  const group = document.querySelector(`.qc-yesno[data-completion="${id}"]`);
+  group.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+  const btn = [...group.querySelectorAll('button')].find(b => b.dataset.opt === value);
+  if (btn) btn.classList.add('selected');
+  document.getElementById('qc-completion-reason-box-' + id).classList.toggle('show', value === 'No');
+}
+
+// Photos are downscaled + compressed client-side before being held in
+// memory (and later sent to the backend as JPEG data URLs) — keeps
+// on-site mobile uploads fast even on a slow site connection.
+function compressQcImage(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const maxDim = 1280;
+        let { width, height } = img;
+        if (width > maxDim || height > maxDim) {
+          if (width > height) { height = Math.round(height * maxDim / width); width = maxDim; }
+          else { width = Math.round(width * maxDim / height); height = maxDim; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', 0.7));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function handleQcPhoto(tradeId, inputEl) {
+  const files = Array.from(inputEl.files || []);
+  for (const file of files) {
+    try {
+      const dataUrl = await compressQcImage(file);
+      qcState.trades[tradeId].photos.push(dataUrl);
+    } catch (e) { /* skip unreadable file */ }
+  }
+  inputEl.value = '';
+  renderQcPhotos(tradeId);
+}
+
+function renderQcPhotos(tradeId) {
+  const row = document.getElementById('qc-photos-' + tradeId);
+  const addBtnHtml = row.querySelector('.qc-photo-btn').outerHTML;
+  const photos = qcState.trades[tradeId].photos;
+  row.innerHTML = photos.map((p, i) =>
+    `<img class="qc-photo-thumb" src="${p}" onclick="removeQcPhoto('${tradeId}',${i})" title="Tap to remove">`
+  ).join('') + addBtnHtml;
+}
+
+function removeQcPhoto(tradeId, idx) {
+  qcState.trades[tradeId].photos.splice(idx, 1);
+  renderQcPhotos(tradeId);
+}
+
+function updateQcSummary() {
+  const box = document.getElementById('qcSummaryBox');
+  const list = document.getElementById('qcSummaryList');
+  const noTrades = QC_TRADES.filter(t => qcState.trades[t.id].status === 'No');
+  if (!noTrades.length) {
+    box.classList.add('hidden');
+    list.innerHTML = '';
+    return;
+  }
+  box.classList.remove('hidden');
+  list.innerHTML = noTrades.map(t => {
+    const rectified = qcState.trades[t.id].rectified;
+    const badge = rectified === 'Yes' ? '<span class="badge ok">Rectified</span>' : '<span class="badge warn">Outstanding</span>';
+    return `<div class="summary-row"><span>${t.label}</span>${badge}</div>`;
+  }).join('');
+}
+
+async function submitQc() {
+  if (!qcState.job) return alert('Please select a job.');
+  if (!qcState.supervisor) return alert('Please select the supervisor doing the QC walk.');
+
+  const unanswered = QC_TRADES.filter(t => !qcState.trades[t.id].status);
+  if (unanswered.length) return alert('Please select YES, NO or N/A for: ' + unanswered.map(t => t.label).join(', '));
+
+  const unansweredCompletion = QC_COMPLETION_QUESTIONS.filter(q => !qcState.completion[q.id].status);
+  if (unansweredCompletion.length) return alert('Please answer: ' + unansweredCompletion.map(q => q.label).join(', '));
+
+  for (const q of QC_COMPLETION_QUESTIONS) {
+    if (qcState.completion[q.id].status === 'No' && !document.getElementById('qc-completion-reason-' + q.id).value.trim()) {
+      return alert(`"${q.label}" is marked NO — please add a reason why.`);
+    }
+  }
+
+  const noTrades = QC_TRADES.filter(t => qcState.trades[t.id].status === 'No');
+  for (const t of noTrades) {
+    const st = qcState.trades[t.id];
+    if (!st.photos.length) return alert(`${t.label} is marked NO — please add a photo of the defect.`);
+    if (!document.getElementById('qc-desc-' + t.id).value.trim()) return alert(`${t.label} is marked NO — please add a short defect description.`);
+    if (!st.rectified) return alert(`${t.label} is marked NO — please confirm whether it's been rectified.`);
+  }
+
+  if (noTrades.length) {
+    const names = noTrades.map(t => t.label).join(', ');
+    const proceed = confirm(`This QC report has ${noTrades.length} item(s) marked NO: ${names}.\n\nYou can still submit — outstanding defects stay clearly visible on the report. Submit now?`);
+    if (!proceed) return;
+  }
+
+  const btn = document.getElementById('qcSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting…';
+
+  const tradesPayload = {};
+  QC_TRADES.forEach(t => {
+    const st = qcState.trades[t.id];
+    tradesPayload[t.id] = {
+      label: t.label,
+      status: st.status,
+      description: st.status === 'No' ? document.getElementById('qc-desc-' + t.id).value.trim() : '',
+      responsible: st.status === 'No' ? document.getElementById('qc-resp-' + t.id).value.trim() : '',
+      rectified: st.status === 'No' ? st.rectified : '',
+      photos: st.status === 'No' ? st.photos : [],
+      checkedItems: t.items.filter((item, i) => st.items[i])
+    };
+  });
+
+  const completionPayload = {};
+  QC_COMPLETION_QUESTIONS.forEach(q => {
+    const st = qcState.completion[q.id];
+    completionPayload[q.id] = {
+      label: q.label,
+      status: st.status,
+      reason: st.status === 'No' ? document.getElementById('qc-completion-reason-' + q.id).value.trim() : ''
+    };
+  });
+
+  const payload = {
+    action: 'qc_submit',
+    job: qcState.job,
+    jobAddress: qcState.jobAddress,
+    supervisor: qcState.supervisor,
+    trades: tradesPayload,
+    completion: completionPayload,
+    notes: document.getElementById('qcNotes').value.trim()
+  };
+
+  try {
+    await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload)
+    });
+    showToast(noTrades.length ? `QC submitted — ${noTrades.length} defect(s) outstanding` : 'QC complete — all good!');
+    resetQcForm();
+  } catch (e) {
+    showToast('Could not submit QC report — check your connection and try again.', true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'QC COMPLETE';
+  }
+}
+
+function resetQcForm() {
+  qcState = { job: '', jobAddress: '', supervisor: '', trades: {}, completion: {}, notes: '' };
+  QC_TRADES.forEach(t => { qcState.trades[t.id] = { status: null, photos: [], rectified: null, items: {} }; });
+  QC_COMPLETION_QUESTIONS.forEach(q => { qcState.completion[q.id] = { status: null, reason: '' }; });
+  document.getElementById('qcJobSelect').value = '';
+  document.getElementById('qcJobAddress').textContent = '';
+  document.getElementById('qcNotes').value = '';
+  document.querySelectorAll('#qcSupervisorGrid .pill').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.qc-yesno[data-completion] button').forEach(b => b.classList.remove('selected'));
+  QC_COMPLETION_QUESTIONS.forEach(q => {
+    document.getElementById('qc-completion-reason-box-' + q.id).classList.remove('show');
+    document.getElementById('qc-completion-reason-' + q.id).value = '';
+  });
+  buildQcTrades();
+  updateQcSummary();
+  window.scrollTo(0, 0);
+}
+
+/* ============================================================
+   MORNING JSA / SWMS
+   ============================================================ */
+function buildJsaPpe() {
+  document.getElementById('jsaPpeList').innerHTML = JSA_PPE.map(p => `<span class="ppe-chip">${p}</span>`).join('');
+}
+
+function buildJsaSteps() {
+  buildJsaPpe();
+  const container = document.getElementById('jsaStepsList');
+  container.innerHTML = JSA_STEPS.map((s, i) => `
+    <div class="jsa-step">
+      <div class="jsa-step-title">${i + 1}. ${s.title}</div>
+      <div class="jsa-col"><b class="hz">⚠ Hazards</b><ul>${s.hazards.map(h => `<li>${h}</li>`).join('')}</ul></div>
+      <div class="jsa-col"><b class="ctl">✔ Controls</b><ul>${s.controls.map(c => `<li>${c}</li>`).join('')}</ul></div>
+    </div>`).join('');
+}
+
+function buildJsaCrewGrid() {
+  const grid = document.getElementById('jsaCrewGrid');
+  grid.innerHTML = "";
+  Object.keys(CREW).forEach(group => {
+    const label = document.createElement('div');
+    label.className = 'role-label';
+    label.textContent = group;
+    grid.appendChild(label);
+    const wrap = document.createElement('div');
+    wrap.className = 'name-grid';
+    CREW[group].forEach(person => {
+      const btn = document.createElement('button');
+      btn.className = 'pill jsa-crew-pill';
+      btn.textContent = person.name;
+      btn.type = 'button';
+      btn.dataset.name = person.name;
+      btn.onclick = () => openJsaSign(person.name, person.role, btn);
+      wrap.appendChild(btn);
+    });
+    grid.appendChild(wrap);
+  });
+}
+
+function openJsaSign(name, role, btnEl) {
+  jsaState.currentWorker = { name, role };
+  document.getElementById('jsaSignName').textContent = name;
+  document.getElementById('jsaSignPad').classList.remove('hidden');
+  document.querySelectorAll('#jsaCrewGrid .pill').forEach(b => b.classList.remove('active-signing'));
+  btnEl.classList.add('active-signing');
+  clearJsaCanvas();
+  sizeJsaCanvas();
+  document.getElementById('jsaSignPad').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function initJsaCanvas() {
+  const canvas = document.getElementById('jsaCanvas');
+  canvas.addEventListener('pointerdown', (e) => {
+    jsaDrawing = true;
+    jsaLastPoint = { x: e.offsetX, y: e.offsetY };
+  });
+  canvas.addEventListener('pointermove', (e) => {
+    if (!jsaDrawing) return;
+    const ctx = canvas.getContext('2d');
+    ctx.strokeStyle = '#1a1a1a';
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(jsaLastPoint.x, jsaLastPoint.y);
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    jsaLastPoint = { x: e.offsetX, y: e.offsetY };
+    jsaHasSignature = true;
+  });
+  canvas.addEventListener('pointerup', () => { jsaDrawing = false; });
+  canvas.addEventListener('pointerleave', () => { jsaDrawing = false; });
+  window.addEventListener('resize', () => {
+    if (!document.getElementById('jsaSignPad').classList.contains('hidden')) sizeJsaCanvas();
+  });
+}
+
+function sizeJsaCanvas() {
+  const canvas = document.getElementById('jsaCanvas');
+  const w = canvas.clientWidth;
+  const h = canvas.clientHeight || 160;
+  if (canvas.width !== w || canvas.height !== h) {
+    canvas.width = w;
+    canvas.height = h;
+  }
+}
+
+function clearJsaCanvas() {
+  const canvas = document.getElementById('jsaCanvas');
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  jsaHasSignature = false;
+}
+
+function saveJsaSignature() {
+  if (!jsaHasSignature) return alert('Please draw a signature first.');
+  const canvas = document.getElementById('jsaCanvas');
+  const dataUrl = canvas.toDataURL('image/png');
+  const { name, role } = jsaState.currentWorker;
+  jsaState.signed[name] = { role, dataUrl };
+  const pillBtn = [...document.querySelectorAll('#jsaCrewGrid .pill')].find(b => b.dataset.name === name);
+  if (pillBtn) { pillBtn.classList.add('signed'); pillBtn.classList.remove('active-signing'); }
+  document.getElementById('jsaSignPad').classList.add('hidden');
+  showToast(name + ' signed');
+}
+
+async function submitJsaSignon() {
+  const job = document.getElementById('jsaJobSelect').value;
+  if (!job) return alert('Select a job.');
+  const workers = Object.keys(jsaState.signed);
+  if (!workers.length) return alert('At least one crew member needs to sign the JSA.');
+  if (!proofState.jsa) return alert('Please take a site photo before signing on (Site photo — starting work).');
+
+  const payload = {
+    action: 'jsa_signon',
+    job,
+    workers: workers.map(name => ({ name, role: jsaState.signed[name].role, signature: jsaState.signed[name].dataUrl })),
+    proof: proofState.jsa
+  };
+
+  const btn = document.getElementById('jsaSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting…';
+
+  try {
+    await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload)
+    });
+    showToast('Morning JSA signed on — ' + workers.length + ' worker(s)');
+    resetJsaForm();
+  } catch (e) {
+    showToast('Could not submit JSA sign-on', true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Submit morning JSA sign-on';
+  }
+}
+
+function resetJsaForm() {
+  jsaState.signed = {};
+  jsaState.currentWorker = null;
+  document.querySelectorAll('#jsaCrewGrid .pill').forEach(b => b.classList.remove('signed', 'active-signing'));
+  document.getElementById('jsaSignPad').classList.add('hidden');
+  document.getElementById('jsaJobSelect').value = '';
+  clearJsaCanvas();
+  resetProof('jsa');
+  window.scrollTo(0, 0);
+}
+
+init();
+</script>
+
+</body>
+</html>
+
